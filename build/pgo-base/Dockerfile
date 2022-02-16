@@ -17,7 +17,12 @@ LABEL vendor="RadonDB" \
 	org.opencontainers.image.vendor="RadonDB" \
 	io.openshift.tags="postgresql,postgres,sql,nosql,radondb" \
 	io.k8s.description="Trusted open source PostgreSQL-as-a-Service"
-
+ARG EPEL7_RPM=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+ARG EPEL8_RPM=https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+ENV TZ=Asia/Shanghai
+COPY conf/pip.conf pip.conf
+ENV PIP_CONFIG_FILE pip.conf
+ADD conf/Centos-8.repo /etc/yum.repos.d/
 COPY licenses /licenses
 
 RUN ${PACKAGER} -y update && ${PACKAGER} -y clean all
