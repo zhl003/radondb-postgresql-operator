@@ -32,7 +32,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/validation/field"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"github.com/crunchydata/postgres-operator/internal/kubeapi"
+	"github.com/radondb/postgres-operator/internal/kubeapi"
 )
 
 // apply sends an apply patch to object's endpoint in the Kubernetes API and

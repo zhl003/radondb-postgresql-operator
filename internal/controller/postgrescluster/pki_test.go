@@ -37,10 +37,10 @@ import (
 	"k8s.io/apimachinery/pkg/util/wait"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"github.com/crunchydata/postgres-operator/internal/naming"
-	"github.com/crunchydata/postgres-operator/internal/pki"
-	"github.com/crunchydata/postgres-operator/internal/testing/require"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/naming"
+	"github.com/radondb/postgres-operator/internal/pki"
+	"github.com/radondb/postgres-operator/internal/testing/require"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 func TestReconcileCerts(t *testing.T) {
@@ -101,7 +101,7 @@ func TestReconcileCerts(t *testing.T) {
 			assert.Check(t, len(rootSecret.ObjectMeta.OwnerReferences) == 1, "first owner reference not set")
 
 			expectedOR := metav1.OwnerReference{
-				APIVersion: "postgres-operator.crunchydata.com/v1beta1",
+				APIVersion: "postgres-operator.radondb.com/v1beta1",
 				Kind:       "PostgresCluster",
 				Name:       "hippocluster1",
 				UID:        cluster1.UID,
@@ -126,7 +126,7 @@ func TestReconcileCerts(t *testing.T) {
 			assert.Check(t, len(rootSecret.ObjectMeta.OwnerReferences) == 2, "second owner reference not set")
 
 			expectedOR := metav1.OwnerReference{
-				APIVersion: "postgres-operator.crunchydata.com/v1beta1",
+				APIVersion: "postgres-operator.radondb.com/v1beta1",
 				Kind:       "PostgresCluster",
 				Name:       "hippocluster2",
 				UID:        cluster2.UID,
@@ -158,7 +158,7 @@ func TestReconcileCerts(t *testing.T) {
 			assert.Check(t, len(rootSecret.ObjectMeta.OwnerReferences) == 1, "owner reference not removed")
 
 			expectedOR := metav1.OwnerReference{
-				APIVersion: "postgres-operator.crunchydata.com/v1beta1",
+				APIVersion: "postgres-operator.radondb.com/v1beta1",
 				Kind:       "PostgresCluster",
 				Name:       "hippocluster2",
 				UID:        cluster2.UID,

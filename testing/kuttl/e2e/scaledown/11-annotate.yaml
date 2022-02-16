@@ -5,9 +5,9 @@ commands:
   # Label instance pods with their current role.
   - script: |
       kubectl label --namespace="${NAMESPACE}" pods \
-        --selector='postgres-operator.crunchydata.com/role=master' \
+        --selector='postgres-operator.radondb.com/role=master' \
         'testing/role-before=master'
   - script: |
       kubectl label --namespace="${NAMESPACE}" pods \
-        --selector='postgres-operator.crunchydata.com/role=replica' \
+        --selector='postgres-operator.radondb.com/role=replica' \
         'testing/role-before=replica'

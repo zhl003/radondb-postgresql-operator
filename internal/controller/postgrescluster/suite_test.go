@@ -39,8 +39,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 
-	"github.com/crunchydata/postgres-operator/internal/logging"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/logging"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 var suite struct {

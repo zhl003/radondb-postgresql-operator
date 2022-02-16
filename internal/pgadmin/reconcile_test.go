@@ -22,8 +22,8 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 
-	"github.com/crunchydata/postgres-operator/internal/testing/cmp"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/testing/cmp"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 func TestConfigMap(t *testing.T) {

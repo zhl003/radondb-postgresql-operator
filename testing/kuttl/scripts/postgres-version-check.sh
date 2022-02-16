@@ -4,7 +4,7 @@ EXPECTED_VERSION=$1
 
 CLUSTER=${CLUSTER:-default}
 
-POSTGRES_POD=$(kubectl -n ${NAMESPACE} get pod --selector=postgres-operator.crunchydata.com/cluster=${CLUSTER},postgres-operator.crunchydata.com/instance-set=instance1 --no-headers -o custom-columns=":metadata.name")
+POSTGRES_POD=$(kubectl -n ${NAMESPACE} get pod --selector=postgres-operator.radondb.com/cluster=${CLUSTER},postgres-operator.radondb.com/instance-set=instance1 --no-headers -o custom-columns=":metadata.name")
 
 # Grab the Postgres major version from `version()` output to compare to the provided value
 VERSION=$(kubectl -n ${NAMESPACE} exec -i ${POSTGRES_POD} -c database -- psql -tc "SELECT version();" |

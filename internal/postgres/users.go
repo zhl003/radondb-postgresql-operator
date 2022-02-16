@@ -20,8 +20,8 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/crunchydata/postgres-operator/internal/logging"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/logging"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 // WriteUsersInPostgreSQL calls exec to create users that do not exist in

@@ -28,7 +28,7 @@ import (
 	"k8s.io/apimachinery/pkg/api/resource"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	"github.com/crunchydata/postgres-operator/internal/naming"
+	"github.com/radondb/postgres-operator/internal/naming"
 )
 
 func TestSafeHash32(t *testing.T) {
@@ -280,8 +280,8 @@ func TestAddNSSWrapper(t *testing.T) {
 		{Name: "NSS_WRAPPER_GROUP", Value: "/tmp/nss_wrapper/postgres/group"},
 	}
 
-	expectedCmd := `NSS_WRAPPER_SUBDIR=postgres CRUNCHY_NSS_USERNAME=postgres ` +
-		`CRUNCHY_NSS_USER_DESC="postgres" /opt/crunchy/bin/nss_wrapper.sh`
+	expectedCmd := `NSS_WRAPPER_SUBDIR=postgres RADONDB_NSS_USERNAME=postgres ` +
+		`RADONDB_NSS_USER_DESC="postgres" /opt/radondb/bin/nss_wrapper.sh`
 
 	testCases := []struct {
 		tcName      string

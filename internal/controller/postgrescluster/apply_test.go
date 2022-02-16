@@ -38,7 +38,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 
-	"github.com/crunchydata/postgres-operator/internal/testing/require"
+	"github.com/radondb/postgres-operator/internal/testing/require"
 )
 
 func TestServerSideApply(t *testing.T) {

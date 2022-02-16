@@ -40,10 +40,10 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/yaml"
 
-	"github.com/crunchydata/postgres-operator/internal/initialize"
-	"github.com/crunchydata/postgres-operator/internal/naming"
-	"github.com/crunchydata/postgres-operator/internal/testing/require"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/initialize"
+	"github.com/radondb/postgres-operator/internal/naming"
+	"github.com/radondb/postgres-operator/internal/testing/require"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 func TestPersistentVolumeClaimLimitations(t *testing.T) {
@@ -323,7 +323,7 @@ func TestPersistentVolumeClaimLimitations(t *testing.T) {
 				pod.Namespace, pod.Name = ns.Name, pvc.Name
 				pod.Spec.Containers = []corev1.Container{{
 					Name:    "any",
-					Image:   CrunchyPostgresHAImage,
+					Image:   RadonDBPostgresHAImage,
 					Command: []string{"true"},
 					VolumeMounts: []corev1.VolumeMount{{
 						MountPath: "/tmp", Name: "volume",
@@ -616,7 +616,7 @@ func TestReconcileConfigureExistingPVCs(t *testing.T) {
 		},
 		Spec: v1beta1.PostgresClusterSpec{
 			PostgresVersion: 13,
-			Image:           "example.com/crunchy-postgres-ha:test",
+			Image:           "example.com/radondb-postgres-ha:test",
 			DataSource: &v1beta1.DataSource{
 				Volumes: &v1beta1.DataSourceVolumes{},
 			},
@@ -634,7 +634,7 @@ func TestReconcileConfigureExistingPVCs(t *testing.T) {
 			}},
 			Backups: v1beta1.Backups{
 				PGBackRest: v1beta1.PGBackRestArchive{
-					Image: "example.com/crunchy-pgbackrest:test",
+					Image: "example.com/radondb-pgbackrest:test",
 					Repos: []v1beta1.PGBackRestRepo{{
 						Name: "repo1",
 						Volume: &v1beta1.RepoPVC{
@@ -876,7 +876,7 @@ func TestReconcileMoveDirectories(t *testing.T) {
 		},
 		Spec: v1beta1.PostgresClusterSpec{
 			PostgresVersion: 13,
-			Image:           "example.com/crunchy-postgres-ha:test",
+			Image:           "example.com/radondb-postgres-ha:test",
 			ImagePullPolicy: corev1.PullAlways,
 			ImagePullSecrets: []corev1.LocalObjectReference{{
 				Name: "test-secret",
@@ -917,7 +917,7 @@ func TestReconcileMoveDirectories(t *testing.T) {
 			}},
 			Backups: v1beta1.Backups{
 				PGBackRest: v1beta1.PGBackRestArchive{
-					Image: "example.com/crunchy-pgbackrest:test",
+					Image: "example.com/radondb-pgbackrest:test",
 					RepoHost: &v1beta1.PGBackRestRepoHost{
 						Resources: corev1.ResourceRequirements{
 							Requests: corev1.ResourceList{
@@ -980,7 +980,7 @@ containers:
     ] && mv \"/pgdata/testpgdatadir\" \"/pgdata/pg13_bootstrap\"\n    rm -f \"/pgdata/pg13/patroni.dynamic.json\"\n
     \   echo \"Updated PG data directory contents:\" \n    ls -lh \"/pgdata\"\n    echo
     \"PG Data directory preparation complete\"\n    "
-  image: example.com/crunchy-postgres-ha:test
+  image: example.com/radondb-postgres-ha:test
   imagePullPolicy: Always
   name: pgdata-move-job
   resources:
@@ -1033,7 +1033,7 @@ containers:
     ] && mv \"/pgwal/testwaldir\" \"/pgwal/testcluster-wal\"\n    echo \"Updated PG
     WAL directory contents:\"\n    ls -lh \"/pgwal\"\n    echo \"PG WAL directory
     preparation complete\"\n    "
-  image: example.com/crunchy-postgres-ha:test
+  image: example.com/radondb-postgres-ha:test
   imagePullPolicy: Always
   name: pgwal-move-job
   resources:
@@ -1088,7 +1088,7 @@ containers:
     \   [ -d \"/pgbackrest/testrepodir\" ] && mv -t \"/pgbackrest/\" \"/pgbackrest/testrepodir/backup\"\n
     \   echo \"Updated /pgbackrest directory contents:\"\n    ls -lh \"/pgbackrest\"\n
     \   echo \"Repo directory preparation complete\"\n    "
-  image: example.com/crunchy-pgbackrest:test
+  image: example.com/radondb-pgbackrest:test
   imagePullPolicy: Always
   name: repo-move-job
   resources:

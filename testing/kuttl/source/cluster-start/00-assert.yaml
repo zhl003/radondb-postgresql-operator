@@ -1,4 +1,4 @@
-apiVersion: postgres-operator.crunchydata.com/v1beta1
+apiVersion: postgres-operator.radondb.com/v1beta1
 kind: PostgresCluster
 metadata:
   name: cluster-start
@@ -13,8 +13,8 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   labels:
-    postgres-operator.crunchydata.com/cluster: cluster-start
-    postgres-operator.crunchydata.com/pgbackrest-backup: replica-create
+    postgres-operator.radondb.com/cluster: cluster-start
+    postgres-operator.radondb.com/pgbackrest-backup: replica-create
 status:
   succeeded: 1
 ---

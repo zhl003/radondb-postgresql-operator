@@ -23,9 +23,9 @@ import (
 	"io"
 	"strings"
 
-	"github.com/crunchydata/postgres-operator/internal/logging"
-	"github.com/crunchydata/postgres-operator/internal/naming"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/logging"
+	"github.com/radondb/postgres-operator/internal/naming"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 type Executor func(
@@ -175,7 +175,7 @@ with create_app().app_context():`,
             ).order_by("id").first() or
             ServerGroup()
         )
-        group.name = "Crunchy PostgreSQL Operator"
+        group.name = "RadonDB PostgreSQL Operator"
         group.user_id = user.id
         db.session.add(group)
         db.session.commit()`,

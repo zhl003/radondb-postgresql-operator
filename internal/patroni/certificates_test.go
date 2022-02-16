@@ -21,8 +21,8 @@ import (
 	"gotest.tools/v3/assert"
 	corev1 "k8s.io/api/core/v1"
 
-	"github.com/crunchydata/postgres-operator/internal/pki"
-	"github.com/crunchydata/postgres-operator/internal/testing/cmp"
+	"github.com/radondb/postgres-operator/internal/pki"
+	"github.com/radondb/postgres-operator/internal/testing/cmp"
 )
 
 const rootPEM = `-----BEGIN CERTIFICATE-----

@@ -3,8 +3,8 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   labels:
-    postgres-operator.crunchydata.com/cluster: init-pgbackrest
-    postgres-operator.crunchydata.com/pgbackrest-backup: manual
-    postgres-operator.crunchydata.com/pgbackrest-repo: repo2
+    postgres-operator.radondb.com/cluster: init-pgbackrest
+    postgres-operator.radondb.com/pgbackrest-backup: manual
+    postgres-operator.radondb.com/pgbackrest-repo: repo2
 status:
   succeeded: 1

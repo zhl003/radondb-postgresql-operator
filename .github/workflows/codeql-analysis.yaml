@@ -16,7 +16,7 @@ jobs:
       contents: read
       security-events: write
 
-    if: ${{ github.repository == 'CrunchyData/postgres-operator' }}
+    if: ${{ github.repository == 'radondb/postgres-operator' }}
 
     steps:
       - uses: actions/checkout@v2

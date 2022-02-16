@@ -33,12 +33,12 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/yaml"
 
-	"github.com/crunchydata/postgres-operator/internal/initialize"
-	"github.com/crunchydata/postgres-operator/internal/naming"
-	"github.com/crunchydata/postgres-operator/internal/postgres"
-	"github.com/crunchydata/postgres-operator/internal/testing/cmp"
-	"github.com/crunchydata/postgres-operator/internal/testing/require"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/initialize"
+	"github.com/radondb/postgres-operator/internal/naming"
+	"github.com/radondb/postgres-operator/internal/postgres"
+	"github.com/radondb/postgres-operator/internal/testing/cmp"
+	"github.com/radondb/postgres-operator/internal/testing/require"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 func TestGeneratePostgresUserSecret(t *testing.T) {
@@ -62,9 +62,9 @@ func TestGeneratePostgresUserSecret(t *testing.T) {
 			assert.Equal(t, secret.Namespace, cluster.Namespace)
 			assert.Assert(t, metav1.IsControlledBy(secret, cluster))
 			assert.DeepEqual(t, secret.Labels, map[string]string{
-				"postgres-operator.crunchydata.com/cluster": "hippo2",
-				"postgres-operator.crunchydata.com/role":    "pguser",
-				"postgres-operator.crunchydata.com/pguser":  "some-user-name",
+				"postgres-operator.radondb.com/cluster": "hippo2",
+				"postgres-operator.radondb.com/role":    "pguser",
+				"postgres-operator.radondb.com/pguser":  "some-user-name",
 			})
 		}
 	})

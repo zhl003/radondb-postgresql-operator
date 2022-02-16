@@ -46,14 +46,14 @@ func TestWatchPodsUpdate(t *testing.T) {
 		ObjectOld: &corev1.Pod{
 			ObjectMeta: metav1.ObjectMeta{
 				Labels: map[string]string{
-					"postgres-operator.crunchydata.com/cluster": "starfish",
+					"postgres-operator.radondb.com/cluster": "starfish",
 				},
 			},
 		},
 		ObjectNew: &corev1.Pod{
 			ObjectMeta: metav1.ObjectMeta{
 				Labels: map[string]string{
-					"postgres-operator.crunchydata.com/cluster": "starfish",
+					"postgres-operator.radondb.com/cluster": "starfish",
 				},
 			},
 		},
@@ -68,7 +68,7 @@ func TestWatchPodsUpdate(t *testing.T) {
 					"status": `{"role":"standby_leader"}`,
 				},
 				Labels: map[string]string{
-					"postgres-operator.crunchydata.com/cluster": "starfish",
+					"postgres-operator.radondb.com/cluster": "starfish",
 				},
 			},
 		},
@@ -76,8 +76,8 @@ func TestWatchPodsUpdate(t *testing.T) {
 			ObjectMeta: metav1.ObjectMeta{
 				Namespace: "some-ns",
 				Labels: map[string]string{
-					"postgres-operator.crunchydata.com/cluster": "starfish",
-					"postgres-operator.crunchydata.com/role":    "master",
+					"postgres-operator.radondb.com/cluster": "starfish",
+					"postgres-operator.radondb.com/role":    "master",
 				},
 			},
 		},
@@ -99,7 +99,7 @@ func TestWatchPodsUpdate(t *testing.T) {
 		base := &corev1.Pod{}
 		base.Namespace = "some-ns"
 		base.Labels = map[string]string{
-			"postgres-operator.crunchydata.com/cluster": "starfish",
+			"postgres-operator.radondb.com/cluster": "starfish",
 		}
 
 		pending := base.DeepCopy()

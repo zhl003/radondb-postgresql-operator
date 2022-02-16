@@ -13,11 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-GCR_IMAGE_PREFIX=gcr.io/crunchy-dev-test
+GCR_IMAGE_PREFIX=gcr.io/radondb-dev-test
 
 IMAGES=(
 postgres-operator
-crunchy-postgres-exporter
+radondb-postgres-exporter
 )
 
 for image in "${IMAGES[@]}"

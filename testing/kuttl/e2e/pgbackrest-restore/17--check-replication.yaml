@@ -7,8 +7,8 @@ commands:
       REPLICA=$(
         kubectl get pod --namespace "${NAMESPACE}" \
           --output name --selector '
-            postgres-operator.crunchydata.com/cluster=original,
-            postgres-operator.crunchydata.com/role=replica'
+            postgres-operator.radondb.com/cluster=original,
+            postgres-operator.radondb.com/role=replica'
       )
 
       kubectl exec --stdin --namespace "${NAMESPACE}" "${REPLICA}" \

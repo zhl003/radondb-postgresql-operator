@@ -37,7 +37,7 @@ RETURNS TABLE(username TEXT, password TEXT) AS '
     AND pg_authid.rolcanlogin
     AND NOT pg_authid.rolsuper
     AND NOT pg_authid.rolreplication
-    AND pg_authid.rolname <> ''_crunchypgbouncer''
+    AND pg_authid.rolname <> ''_radondbpgbouncer''
     AND (pg_authid.rolvaliduntil IS NULL OR pg_authid.rolvaliduntil >= CURRENT_TIMESTAMP)'
 LANGUAGE SQL STABLE SECURITY DEFINER;`)
 }
@@ -69,7 +69,7 @@ SELECT pg_catalog.format('DROP OWNED BY %I CASCADE', :'username')
 COMMIT;`))
 			gomega.NewWithT(t).Expect(command).To(gomega.ContainElements(
 				`--set=namespace=pgbouncer`,
-				`--set=username=_crunchypgbouncer`,
+				`--set=username=_radondbpgbouncer`,
 			), "expected query parameters")
 
 			return expected
@@ -103,7 +103,7 @@ COMMIT;`))
 			assert.NilError(t, err)
 			assert.Equal(t, string(b), `SET client_min_messages = WARNING; DROP ROLE IF EXISTS :"username";`)
 			gomega.NewWithT(t).Expect(command).To(gomega.ContainElements(
-				`--set=username=_crunchypgbouncer`,
+				`--set=username=_radondbpgbouncer`,
 			), "expected query parameters")
 
 			return expected
@@ -168,7 +168,7 @@ RETURNS TABLE(username TEXT, password TEXT) AS '
     AND pg_authid.rolcanlogin
     AND NOT pg_authid.rolsuper
     AND NOT pg_authid.rolreplication
-    AND pg_authid.rolname <> ''_crunchypgbouncer''
+    AND pg_authid.rolname <> ''_radondbpgbouncer''
     AND (pg_authid.rolvaliduntil IS NULL OR pg_authid.rolvaliduntil >= CURRENT_TIMESTAMP)'
 LANGUAGE SQL STABLE SECURITY DEFINER;
 REVOKE ALL PRIVILEGES
@@ -181,7 +181,7 @@ COMMIT;`))
 
 		gomega.NewWithT(t).Expect(command).To(gomega.ContainElements(
 			`--set=namespace=pgbouncer`,
-			`--set=username=_crunchypgbouncer`,
+			`--set=username=_radondbpgbouncer`,
 			`--set=verifier=digest$and==:whatnot`,
 		), "expected query parameters")
 
@@ -195,6 +195,6 @@ COMMIT;`))
 func TestPostgreSQLHBAs(t *testing.T) {
 	rules := postgresqlHBAs()
 	assert.Equal(t, len(rules), 2)
-	assert.Equal(t, rules[0].String(), `hostssl all "_crunchypgbouncer" all scram-sha-256`)
-	assert.Equal(t, rules[1].String(), `host all "_crunchypgbouncer" all reject`)
+	assert.Equal(t, rules[0].String(), `hostssl all "_radondbpgbouncer" all scram-sha-256`)
+	assert.Equal(t, rules[1].String(), `host all "_radondbpgbouncer" all reject`)
 }

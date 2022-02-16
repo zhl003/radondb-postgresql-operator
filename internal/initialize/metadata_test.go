@@ -21,7 +21,7 @@ import (
 	"gotest.tools/v3/assert"
 	corev1 "k8s.io/api/core/v1"
 
-	"github.com/crunchydata/postgres-operator/internal/initialize"
+	"github.com/radondb/postgres-operator/internal/initialize"
 )
 
 func TestAnnotations(t *testing.T) {

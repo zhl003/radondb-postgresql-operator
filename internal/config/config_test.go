@@ -22,7 +22,7 @@ import (
 	"gotest.tools/v3/assert"
 	"sigs.k8s.io/yaml"
 
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 func saveEnv(t testing.TB, key string) {

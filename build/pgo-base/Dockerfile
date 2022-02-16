@@ -8,19 +8,16 @@ ARG PG_FULL
 ARG PACKAGER
 ARG RELVER
 
-MAINTAINER info@crunchydata.com
 
-LABEL vendor="Crunchy Data" \
-	url="https://crunchydata.com" \
+LABEL vendor="RadonDB" \
+	url="https://radondb.com" \
 	release="${RELVER}" \
 	postgresql.version.major="${PGVERSION}" \
 	postgresql.version="${PG_FULL}" \
-	org.opencontainers.image.vendor="Crunchy Data" \
-	io.openshift.tags="postgresql,postgres,sql,nosql,crunchy" \
+	org.opencontainers.image.vendor="RadonDB" \
+	io.openshift.tags="postgresql,postgres,sql,nosql,radondb" \
 	io.k8s.description="Trusted open source PostgreSQL-as-a-Service"
 
-COPY redhat/atomic/help.1 /help.1
-COPY redhat/atomic/help.md /help.md
 COPY licenses /licenses
 
 RUN ${PACKAGER} -y update && ${PACKAGER} -y clean all
@@ -38,7 +35,5 @@ RUN if [ "$BASEOS" = "ubi8" ] ; then \
     && echo "state=disabled"  >> /etc/dnf/modules.d/postgresql.module ; \
 fi
 
-# Crunchy PostgreSQL repository
-ADD conf/RPM-GPG-KEY-crunchydata* /
-ADD conf/crunchypg${PGVERSION}.repo /etc/yum.repos.d/
-RUN rpm --import RPM-GPG-KEY-crunchydata*
+# RadonDB PostgreSQL repository
+ADD conf/radondbpg${PGVERSION}.repo /etc/yum.repos.d/

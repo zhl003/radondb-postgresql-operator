@@ -34,9 +34,9 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 
-	"github.com/crunchydata/postgres-operator/internal/initialize"
-	"github.com/crunchydata/postgres-operator/internal/testing/cmp"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/initialize"
+	"github.com/radondb/postgres-operator/internal/testing/cmp"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 func TestReconcilerRolloutInstance(t *testing.T) {
@@ -53,7 +53,7 @@ func TestReconcilerRolloutInstance(t *testing.T) {
 						Name:      "one-pod-bruh",
 						Labels: map[string]string{
 							"controller-revision-hash":               "gamma",
-							"postgres-operator.crunchydata.com/role": "master",
+							"postgres-operator.radondb.com/role": "master",
 						},
 					},
 					Status: corev1.PodStatus{
@@ -115,7 +115,7 @@ func TestReconcilerRolloutInstance(t *testing.T) {
 						Name:      "the-pod",
 						Labels: map[string]string{
 							"controller-revision-hash":               "gamma",
-							"postgres-operator.crunchydata.com/role": "master",
+							"postgres-operator.radondb.com/role": "master",
 						},
 					},
 				}},
@@ -225,7 +225,7 @@ func TestReconcilerRolloutInstances(t *testing.T) {
 					ObjectMeta: metav1.ObjectMeta{
 						Labels: map[string]string{
 							"controller-revision-hash":               "gamma",
-							"postgres-operator.crunchydata.com/role": "master",
+							"postgres-operator.radondb.com/role": "master",
 						},
 					},
 					Status: corev1.PodStatus{
@@ -270,7 +270,7 @@ func TestReconcilerRolloutInstances(t *testing.T) {
 					ObjectMeta: metav1.ObjectMeta{
 						Labels: map[string]string{
 							"controller-revision-hash":               "beta",
-							"postgres-operator.crunchydata.com/role": "master",
+							"postgres-operator.radondb.com/role": "master",
 						},
 					},
 					Status: corev1.PodStatus{
@@ -385,7 +385,7 @@ func TestReconcilerRolloutInstances(t *testing.T) {
 					ObjectMeta: metav1.ObjectMeta{
 						Labels: map[string]string{
 							"controller-revision-hash":               "beta",
-							"postgres-operator.crunchydata.com/role": "master",
+							"postgres-operator.radondb.com/role": "master",
 						},
 					},
 					Status: corev1.PodStatus{

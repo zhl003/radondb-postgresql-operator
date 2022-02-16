@@ -3,7 +3,7 @@
 PGOROOT ?= $(CURDIR)
 PGO_BASEOS ?= centos8
 BASE_IMAGE_OS ?= $(PGO_BASEOS)
-PGO_IMAGE_PREFIX ?= crunchydata
+PGO_IMAGE_PREFIX ?= radondb
 PGO_IMAGE_TAG ?= $(PGO_BASEOS)-$(PGO_VERSION)
 PGO_VERSION ?= $(shell git describe --tags)
 PGO_PG_VERSION ?= 13
@@ -71,7 +71,7 @@ endif
 
 # To build a specific image, run 'make <name>-image' (e.g. 'make postgres-operator-image')
 images = postgres-operator \
-	crunchy-postgres-exporter
+	radondb-postgres-exporter
 
 .PHONY: all setup clean push pull release deploy
 
@@ -114,7 +114,7 @@ deploy-dev: build-postgres-operator createnamespaces
 	$(PGO_KUBE_CLIENT) apply --server-side=true --force-conflicts -k ./config/dev
 	hack/create-kubeconfig.sh postgres-operator pgo
 	env \
-		CRUNCHY_DEBUG=true \
+		RADONDB_DEBUG=true \
 		KUBECONFIG=hack/.kube/postgres-operator/pgo \
 		$(shell $(PGO_KUBE_CLIENT) kustomize ./config/dev | \
 			sed -ne '/^kind: Deployment/,/^---/ { \
@@ -136,7 +136,7 @@ build-postgres-operator:
 build-pgo-%:
 	$(info No binary build needed for $@)
 
-build-crunchy-postgres-exporter:
+build-radondb-postgres-exporter:
 	$(info No binary build needed for $@)
 
 
@@ -220,7 +220,7 @@ check-kuttl:
 # Set reasonable default for KUTTL_ env vars for templating
 KUTTL_PG_VERSION ?= 14
 KUTTL_PG_UPGRADE_FROM_VERSION ?= 13
-KUTTL_PSQL_IMAGE ?= registry.developers.crunchydata.com/crunchydata/crunchy-postgres:centos8-14.1-0
+KUTTL_PSQL_IMAGE ?= docker.io/radondb/radondb-postgres:centos8-14.1-0
 
 # TODO: When I attempted to loop through the directories and find the yaml files,
 # due to how makefile expands variables, each file would end up in each directory.
@@ -294,8 +294,8 @@ generate-crd:
 		output:dir='build/crd/generated' # build/crd/generated/{group}_{plural}.yaml
 	@
 	@# Kustomize returns lots of objects. The following only makes sense when there is one CRD.
-	[ "$$(ls -1 ./build/crd/generated)" = 'postgres-operator.crunchydata.com_postgresclusters.yaml' ]
-	$(PGO_KUBE_CLIENT) kustomize ./build/crd > ./config/crd/bases/postgres-operator.crunchydata.com_postgresclusters.yaml
+	[ "$$(ls -1 ./build/crd/generated)" = 'postgres-operator.radondb.com_postgresclusters.yaml' ]
+	$(PGO_KUBE_CLIENT) kustomize ./build/crd > ./config/crd/bases/postgres-operator.radondb.com_postgresclusters.yaml
 
 generate-crd-docs:
 	GOBIN='$(CURDIR)/hack/tools' go install fybrik.io/crdoc@v0.5.2
@@ -307,7 +307,7 @@ generate-crd-docs:
 generate-deepcopy:
 	GOBIN='$(CURDIR)/hack/tools' ./hack/controller-generator.sh \
 		object:headerFile='hack/boilerplate.go.txt' \
-		paths='./pkg/apis/postgres-operator.crunchydata.com/...'
+		paths='./pkg/apis/postgres-operator.radondb.com/...'
 
 generate-rbac:
 	GOBIN='$(CURDIR)/hack/tools' ./hack/generate-rbac.sh \

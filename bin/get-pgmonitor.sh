@@ -22,6 +22,6 @@ then
     rm -rf ${PGOROOT?}/tools/pgmonitor
 fi
 
-git clone https://github.com/CrunchyData/pgmonitor.git ${PGOROOT?}/tools/pgmonitor
+git clone https://github.com/zhl003/pgmonitor.git ${PGOROOT?}/tools/pgmonitor
 cd ${PGOROOT?}/tools/pgmonitor
 git checkout ${PGMONITOR_COMMIT?}

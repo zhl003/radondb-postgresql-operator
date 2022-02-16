@@ -5,11 +5,11 @@ set -e -u
 REGISTRY='us.gcr.io/container-suite'
 VERSION=$CCP_IMAGE_TAG
 IMAGES=(
-    crunchy-postgres-ha
-    crunchy-pgbadger
-    crunchy-pgbouncer
-    crunchy-pgdump
-    crunchy-pgrestore
+    radondb-postgres-ha
+    radondb-pgbadger
+    radondb-pgbouncer
+    radondb-pgdump
+    radondb-pgrestore
 )
 
 function echo_green() {
@@ -26,7 +26,7 @@ for image in "${IMAGES[@]}"
 do
     echo_green "=> Pulling ${REGISTRY?}/${image?}:${VERSION?}.."
     docker pull ${REGISTRY?}/${image?}:${VERSION?}
-    docker tag ${REGISTRY?}/${image?}:${VERSION?} crunchydata/${image?}:${VERSION?}
+    docker tag ${REGISTRY?}/${image?}:${VERSION?} radondb/${image?}:${VERSION?}
 done
 
 echo_green "=> Done!"

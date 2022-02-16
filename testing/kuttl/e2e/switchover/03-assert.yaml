@@ -4,10 +4,10 @@ apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    postgres-operator.crunchydata.com/cluster: switchover
-    postgres-operator.crunchydata.com/data: postgres
+    postgres-operator.radondb.com/cluster: switchover
+    postgres-operator.radondb.com/data: postgres
 
-    postgres-operator.crunchydata.com/role: master
+    postgres-operator.radondb.com/role: master
     testing/role-before: replica
 
 ---
@@ -16,15 +16,15 @@ apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    postgres-operator.crunchydata.com/cluster: switchover
-    postgres-operator.crunchydata.com/data: postgres
+    postgres-operator.radondb.com/cluster: switchover
+    postgres-operator.radondb.com/data: postgres
 
-    postgres-operator.crunchydata.com/role: replica
+    postgres-operator.radondb.com/role: replica
     testing/role-before: master
 
 ---
 # All instances should be healthy.
-apiVersion: postgres-operator.crunchydata.com/v1beta1
+apiVersion: postgres-operator.radondb.com/v1beta1
 kind: PostgresCluster
 metadata:
   name: switchover

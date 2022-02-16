@@ -8,15 +8,15 @@ spec:
       restartPolicy: Never
       containers:
       - name: psql
-        image: us.gcr.io/container-suite/crunchy-postgres:centos8-14.1-5.1.0-rc.1-0
+        image: us.gcr.io/container-suite/radondb-postgres:centos8-14.1-5.1.0-rc.1-0
         command:
         - bash
         - -c
         - --
         - |-
-          psql -c 'create user "krb5hippo@PGO.CRUNCHYDATA.COM";'
-          kinit -k -t /krb5-conf/krb5.keytab krb5hippo@PGO.CRUNCHYDATA.COM
-          psql -U krb5hippo@PGO.CRUNCHYDATA.COM -h gssapi-primary.$(NAMESPACE).svc.cluster.local -d postgres \
+          psql -c 'create user "krb5hippo@PGO.RADONDB.COM";'
+          kinit -k -t /krb5-conf/krb5.keytab krb5hippo@PGO.RADONDB.COM
+          psql -U krb5hippo@PGO.RADONDB.COM -h gssapi-primary.$(NAMESPACE).svc.cluster.local -d postgres \
             -c 'select version();'
         env:
         - name: NAMESPACE

@@ -31,7 +31,7 @@ echo "Generating Kustomize patch file for removing Kube API TODOs"
 name_desc_with_todo=$(
   yq -r \
     .spec.versions[0].schema.openAPIV3Schema.properties.spec.properties.customTLSSecret.properties.name.description \
-    "${crd_build_dir}/generated/postgres-operator.crunchydata.com_postgresclusters.yaml"
+    "${crd_build_dir}/generated/postgres-operator.radondb.com_postgresclusters.yaml"
 )
 name_desc_without_todo=$(sed 's/ TODO.*//g' <<< "${name_desc_with_todo}")
 
@@ -41,4 +41,4 @@ yq -y --arg old "${name_desc_with_todo}" --arg new "${name_desc_without_todo}" '
 	[paths(select(. == $old)) | { op: "copy", from: "/work", path: "/\(map(tostring) | join("/"))" }] +
 	[{ op: "remove", path: "/work" }]
 ' \
-	"${crd_build_dir}/generated/postgres-operator.crunchydata.com_postgresclusters.yaml" > "${crd_build_dir}/todos.yaml"
+	"${crd_build_dir}/generated/postgres-operator.radondb.com_postgresclusters.yaml" > "${crd_build_dir}/todos.yaml"

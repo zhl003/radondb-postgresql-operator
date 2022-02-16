@@ -29,10 +29,10 @@ import (
 	"k8s.io/apimachinery/pkg/api/resource"
 	"sigs.k8s.io/yaml"
 
-	"github.com/crunchydata/postgres-operator/internal/initialize"
-	"github.com/crunchydata/postgres-operator/internal/naming"
-	"github.com/crunchydata/postgres-operator/internal/testing/require"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/initialize"
+	"github.com/radondb/postgres-operator/internal/naming"
+	"github.com/radondb/postgres-operator/internal/testing/require"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 func TestCreatePGBackRestConfigMapIntent(t *testing.T) {
@@ -89,9 +89,9 @@ func TestCreatePGBackRestConfigMapIntent(t *testing.T) {
 
 		assert.DeepEqual(t, configmap.Annotations, map[string]string{})
 		assert.DeepEqual(t, configmap.Labels, map[string]string{
-			"postgres-operator.crunchydata.com/cluster":           "hippo-dance",
-			"postgres-operator.crunchydata.com/pgbackrest":        "",
-			"postgres-operator.crunchydata.com/pgbackrest-config": "",
+			"postgres-operator.radondb.com/cluster":           "hippo-dance",
+			"postgres-operator.radondb.com/pgbackrest":        "",
+			"postgres-operator.radondb.com/pgbackrest-config": "",
 		})
 
 		assert.Equal(t, configmap.Data["config-hash"], "abcde12345")
@@ -170,7 +170,7 @@ pg1-socket-path = /tmp/postgres
 				"lk1": "cluster-lv1",
 				"lk2": "cluster-lv2",
 
-				"postgres-operator.crunchydata.com/cluster": "cluster-ignored",
+				"postgres-operator.radondb.com/cluster": "cluster-ignored",
 			},
 		}
 		cluster.Spec.Backups.PGBackRest.Metadata = &v1beta1.Metadata{
@@ -182,7 +182,7 @@ pg1-socket-path = /tmp/postgres
 				"lk2": "backups-lv2",
 				"lk3": "backups-lv3",
 
-				"postgres-operator.crunchydata.com/cluster": "backups-ignored",
+				"postgres-operator.radondb.com/cluster": "backups-ignored",
 			},
 		}
 
@@ -199,9 +199,9 @@ pg1-socket-path = /tmp/postgres
 			"lk2": "backups-lv2",
 			"lk3": "backups-lv3",
 
-			"postgres-operator.crunchydata.com/cluster":           "hippo-dance",
-			"postgres-operator.crunchydata.com/pgbackrest":        "",
-			"postgres-operator.crunchydata.com/pgbackrest-config": "",
+			"postgres-operator.radondb.com/cluster":           "hippo-dance",
+			"postgres-operator.radondb.com/pgbackrest":        "",
+			"postgres-operator.radondb.com/pgbackrest-config": "",
 		})
 	})
 }

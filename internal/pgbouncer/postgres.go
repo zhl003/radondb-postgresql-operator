@@ -21,10 +21,10 @@ import (
 
 	corev1 "k8s.io/api/core/v1"
 
-	"github.com/crunchydata/postgres-operator/internal/logging"
-	"github.com/crunchydata/postgres-operator/internal/postgres"
-	"github.com/crunchydata/postgres-operator/internal/postgres/password"
-	"github.com/crunchydata/postgres-operator/internal/util"
+	"github.com/radondb/postgres-operator/internal/logging"
+	"github.com/radondb/postgres-operator/internal/postgres"
+	"github.com/radondb/postgres-operator/internal/postgres/password"
+	"github.com/radondb/postgres-operator/internal/util"
 )
 
 const (
@@ -34,7 +34,7 @@ const (
 	// to also be related to the "auth_user".
 	// - https://github.com/pgbouncer/pgbouncer/issues/568
 	// - https://github.com/pgbouncer/pgbouncer/issues/302#issuecomment-815097248
-	postgresqlUser = "_crunchypgbouncer"
+	postgresqlUser = "_radondbpgbouncer"
 )
 
 // sqlAuthenticationQuery returns the SECURITY DEFINER function that allows

@@ -27,8 +27,8 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/yaml"
 
-	"github.com/crunchydata/postgres-operator/internal/testing/require"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/testing/require"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 func TestPrettyYAML(t *testing.T) {
@@ -46,7 +46,7 @@ func TestAuthFileContents(t *testing.T) {
 
 	password := `very"random`
 	data := authFileContents(password)
-	assert.Equal(t, string(data), `"_crunchypgbouncer" "very""random"`+"\n")
+	assert.Equal(t, string(data), `"_radondbpgbouncer" "very""random"`+"\n")
 }
 
 func TestClusterINI(t *testing.T) {
@@ -74,7 +74,7 @@ func TestClusterINI(t *testing.T) {
 [pgbouncer]
 auth_file = /etc/pgbouncer/~postgres-operator/users.txt
 auth_query = SELECT username, password from pgbouncer.get_auth($1)
-auth_user = _crunchypgbouncer
+auth_user = _radondbpgbouncer
 client_tls_ca_file = /etc/pgbouncer/~postgres-operator/frontend-ca.crt
 client_tls_cert_file = /etc/pgbouncer/~postgres-operator/frontend-tls.crt
 client_tls_key_file = /etc/pgbouncer/~postgres-operator/frontend-tls.key
@@ -114,7 +114,7 @@ unix_socket_dir =
 [pgbouncer]
 auth_file = /etc/pgbouncer/~postgres-operator/users.txt
 auth_query = SELECT username, password from pgbouncer.get_auth($1)
-auth_user = _crunchypgbouncer
+auth_user = _radondbpgbouncer
 client_tls_ca_file = /etc/pgbouncer/~postgres-operator/frontend-ca.crt
 client_tls_cert_file = /etc/pgbouncer/~postgres-operator/frontend-tls.crt
 client_tls_key_file = /etc/pgbouncer/~postgres-operator/frontend-tls.key

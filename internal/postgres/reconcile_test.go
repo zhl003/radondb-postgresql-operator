@@ -27,10 +27,10 @@ import (
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"github.com/crunchydata/postgres-operator/internal/initialize"
-	"github.com/crunchydata/postgres-operator/internal/naming"
-	"github.com/crunchydata/postgres-operator/internal/testing/require"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/initialize"
+	"github.com/radondb/postgres-operator/internal/naming"
+	"github.com/radondb/postgres-operator/internal/testing/require"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 func TestDataVolumeMount(t *testing.T) {
@@ -685,12 +685,12 @@ func TestUpgradeJob(t *testing.T) {
 	assert.Assert(t, marshalMatches(job, `
 metadata:
   annotations:
-    postgres-operator.crunchydata.com/pg-upgrade: "12"
+    postgres-operator.radondb.com/pg-upgrade: "12"
     someAnnotation: testvalue2
   creationTimestamp: null
   labels:
-    postgres-operator.crunchydata.com/cluster: testcluster
-    postgres-operator.crunchydata.com/pgupgrade: ""
+    postgres-operator.radondb.com/cluster: testcluster
+    postgres-operator.radondb.com/pgupgrade: ""
     someLabel: testvalue1
   name: testcluster-pgupgrade
   namespace: testnamespace
@@ -699,12 +699,12 @@ spec:
   template:
     metadata:
       annotations:
-        postgres-operator.crunchydata.com/pg-upgrade: "12"
+        postgres-operator.radondb.com/pg-upgrade: "12"
         someAnnotation: testvalue2
       creationTimestamp: null
       labels:
-        postgres-operator.crunchydata.com/cluster: testcluster
-        postgres-operator.crunchydata.com/pgupgrade: ""
+        postgres-operator.radondb.com/cluster: testcluster
+        postgres-operator.radondb.com/pgupgrade: ""
         someLabel: testvalue1
     spec:
       containers:

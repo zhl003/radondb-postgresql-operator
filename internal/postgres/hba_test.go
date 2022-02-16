@@ -21,7 +21,7 @@ import (
 
 	"gotest.tools/v3/assert"
 
-	"github.com/crunchydata/postgres-operator/internal/testing/cmp"
+	"github.com/radondb/postgres-operator/internal/testing/cmp"
 )
 
 func TestNewHBAs(t *testing.T) {
@@ -42,9 +42,9 @@ func TestNewHBAs(t *testing.T) {
 	hba := NewHBAs()
 	assert.Assert(t, matches(hba.Mandatory, `
 local    all          "postgres"      peer
-hostssl  replication  "_crunchyrepl"  all   cert
-hostssl  "postgres"   "_crunchyrepl"  all   cert
-host     all          "_crunchyrepl"  all   reject
+hostssl  replication  "_radondbrepl"  all   cert
+hostssl  "postgres"   "_radondbrepl"  all   cert
+host     all          "_radondbrepl"  all   reject
 	`))
 	assert.Assert(t, matches(hba.Default, `
 hostssl  all  all  all  md5

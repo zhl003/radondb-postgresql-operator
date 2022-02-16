@@ -4,8 +4,8 @@ ARG PREFIX
 FROM ${PREFIX}/pgo-base:${BASEOS}-${BASEVER}
 
 LABEL name="postgres-operator" \
-	summary="Crunchy PostgreSQL Operator" \
-	description="Crunchy PostgreSQL Operator"
+	summary="RadonDB PostgreSQL Operator" \
+	description="RadonDB PostgreSQL Operator"
 
 ADD bin/postgres-operator /usr/local/bin
 

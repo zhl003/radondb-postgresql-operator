@@ -52,12 +52,12 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	"github.com/crunchydata/postgres-operator/internal/initialize"
-	"github.com/crunchydata/postgres-operator/internal/naming"
-	"github.com/crunchydata/postgres-operator/internal/pgbackrest"
-	"github.com/crunchydata/postgres-operator/internal/pki"
-	"github.com/crunchydata/postgres-operator/internal/testing/require"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/initialize"
+	"github.com/radondb/postgres-operator/internal/naming"
+	"github.com/radondb/postgres-operator/internal/pgbackrest"
+	"github.com/radondb/postgres-operator/internal/pki"
+	"github.com/radondb/postgres-operator/internal/testing/require"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 var testCronSchedule string = "*/15 * * * *"
@@ -77,7 +77,7 @@ func fakePostgresCluster(clusterName, namespace, clusterUID string,
 			ImagePullSecrets: []corev1.LocalObjectReference{{
 				Name: "myImagePullSecret"},
 			},
-			Image: "example.com/crunchy-postgres-ha:test",
+			Image: "example.com/radondb-postgres-ha:test",
 			InstanceSets: []v1beta1.PostgresInstanceSetSpec{{
 				Name: "instance1",
 				DataVolumeClaimSpec: corev1.PersistentVolumeClaimSpec{
@@ -91,7 +91,7 @@ func fakePostgresCluster(clusterName, namespace, clusterUID string,
 			}},
 			Backups: v1beta1.Backups{
 				PGBackRest: v1beta1.PGBackRestArchive{
-					Image: "example.com/crunchy-pgbackrest:test",
+					Image: "example.com/radondb-pgbackrest:test",
 					Jobs: &v1beta1.BackupJobs{
 						PriorityClassName: initialize.String("some-priority-class"),
 					},
@@ -344,36 +344,36 @@ tolerations:
 topologySpreadConstraints:
 - labelSelector:
     matchExpressions:
-    - key: postgres-operator.crunchydata.com/cluster
+    - key: postgres-operator.radondb.com/cluster
       operator: In
       values:
       - somename
-    - key: postgres-operator.crunchydata.com/data
+    - key: postgres-operator.radondb.com/data
       operator: Exists
   maxSkew: 1
   topologyKey: fakekey
   whenUnsatisfiable: ScheduleAnyway
 - labelSelector:
     matchExpressions:
-    - key: postgres-operator.crunchydata.com/data
+    - key: postgres-operator.radondb.com/data
       operator: In
       values:
       - postgres
       - pgbackrest
     matchLabels:
-      postgres-operator.crunchydata.com/cluster: hippocluster
+      postgres-operator.radondb.com/cluster: hippocluster
   maxSkew: 1
   topologyKey: kubernetes.io/hostname
   whenUnsatisfiable: ScheduleAnyway
 - labelSelector:
     matchExpressions:
-    - key: postgres-operator.crunchydata.com/data
+    - key: postgres-operator.radondb.com/data
       operator: In
       values:
       - postgres
       - pgbackrest
     matchLabels:
-      postgres-operator.crunchydata.com/cluster: hippocluster
+      postgres-operator.radondb.com/cluster: hippocluster
   maxSkew: 1
   topologyKey: topology.kubernetes.io/zone
   whenUnsatisfiable: ScheduleAnyway
@@ -810,9 +810,9 @@ func TestGetPGBackRestExecSelector(t *testing.T) {
 			Name:   "repo1",
 			Volume: &v1beta1.RepoPVC{},
 		},
-		expectedSelector: "postgres-operator.crunchydata.com/cluster=hippo," +
-			"postgres-operator.crunchydata.com/pgbackrest=," +
-			"postgres-operator.crunchydata.com/pgbackrest-dedicated=",
+		expectedSelector: "postgres-operator.radondb.com/cluster=hippo," +
+			"postgres-operator.radondb.com/pgbackrest=," +
+			"postgres-operator.radondb.com/pgbackrest-dedicated=",
 		expectedContainer: "pgbackrest",
 	}, {
 		desc: "cloud repo defined no repo host enabled",
@@ -823,9 +823,9 @@ func TestGetPGBackRestExecSelector(t *testing.T) {
 			Name: "repo1",
 			S3:   &v1beta1.RepoS3{},
 		},
-		expectedSelector: "postgres-operator.crunchydata.com/cluster=hippo," +
-			"postgres-operator.crunchydata.com/instance," +
-			"postgres-operator.crunchydata.com/role=master",
+		expectedSelector: "postgres-operator.radondb.com/cluster=hippo," +
+			"postgres-operator.radondb.com/instance," +
+			"postgres-operator.radondb.com/role=master",
 		expectedContainer: "database",
 	}}
 
@@ -948,9 +948,9 @@ func TestReconcileReplicaCreateBackup(t *testing.T) {
 		case "NAMESPACE":
 			assert.Assert(t, env.Value == ns.Name)
 		case "SELECTOR":
-			assert.Assert(t, env.Value == "postgres-operator.crunchydata.com/cluster=hippocluster,"+
-				"postgres-operator.crunchydata.com/pgbackrest=,"+
-				"postgres-operator.crunchydata.com/pgbackrest-dedicated=")
+			assert.Assert(t, env.Value == "postgres-operator.radondb.com/cluster=hippocluster,"+
+				"postgres-operator.radondb.com/pgbackrest=,"+
+				"postgres-operator.radondb.com/pgbackrest-dedicated=")
 		}
 	}
 	// verify mounted configuration is present
@@ -2256,7 +2256,7 @@ func TestCopyConfigurationResources(t *testing.T) {
 			},
 			Spec: v1beta1.PostgresClusterSpec{
 				PostgresVersion: 13,
-				Image:           "example.com/crunchy-postgres-ha:test",
+				Image:           "example.com/radondb-postgres-ha:test",
 				InstanceSets: []v1beta1.PostgresInstanceSetSpec{{
 					Name: "instance1",
 					DataVolumeClaimSpec: corev1.PersistentVolumeClaimSpec{
@@ -2282,7 +2282,7 @@ func TestCopyConfigurationResources(t *testing.T) {
 								},
 							}},
 						},
-						Image: "example.com/crunchy-pgbackrest:test",
+						Image: "example.com/radondb-pgbackrest:test",
 						Repos: []v1beta1.PGBackRestRepo{{
 							Name: "repo1",
 						}},
@@ -2301,7 +2301,7 @@ func TestCopyConfigurationResources(t *testing.T) {
 			},
 			Spec: v1beta1.PostgresClusterSpec{
 				PostgresVersion: 13,
-				Image:           "example.com/crunchy-postgres-ha:test",
+				Image:           "example.com/radondb-postgres-ha:test",
 				DataSource: &v1beta1.DataSource{
 					PostgresCluster: &v1beta1.PostgresClusterDataSource{
 						ClusterName:      scName,
@@ -2322,7 +2322,7 @@ func TestCopyConfigurationResources(t *testing.T) {
 				}},
 				Backups: v1beta1.Backups{
 					PGBackRest: v1beta1.PGBackRestArchive{
-						Image: "example.com/crunchy-pgbackrest:test",
+						Image: "example.com/radondb-pgbackrest:test",
 						Repos: []v1beta1.PGBackRestRepo{{
 							Name: "repo1",
 						}},
@@ -2476,7 +2476,7 @@ func TestGenerateBackupJobIntent(t *testing.T) {
 		assert.Assert(t, marshalMatches(spec.Template.Spec, `
 containers:
 - command:
-  - /opt/crunchy/bin/pgbackrest
+  - /opt/radondb/bin/pgbackrest
   env:
   - name: COMMAND
     value: backup
@@ -2488,7 +2488,7 @@ containers:
     value: database
   - name: NAMESPACE
   - name: SELECTOR
-    value: postgres-operator.crunchydata.com/cluster=,postgres-operator.crunchydata.com/instance,postgres-operator.crunchydata.com/role=master
+    value: postgres-operator.radondb.com/cluster=,postgres-operator.radondb.com/instance,postgres-operator.radondb.com/role=master
   name: pgbackrest
   resources: {}
   securityContext:
@@ -3532,7 +3532,7 @@ func TestSetScheduledJobStatus(t *testing.T) {
 			},
 			ObjectMeta: metav1.ObjectMeta{
 				Name:   "TestJob",
-				Labels: map[string]string{"postgres-operator.crunchydata.com/pgbackrest-cronjob": "full"},
+				Labels: map[string]string{"postgres-operator.radondb.com/pgbackrest-cronjob": "full"},
 			},
 			Status: batchv1.JobStatus{
 				Active:    1,

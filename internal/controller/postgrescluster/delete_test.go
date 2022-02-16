@@ -41,9 +41,9 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 	"sigs.k8s.io/yaml"
 
-	"github.com/crunchydata/postgres-operator/internal/patroni"
-	"github.com/crunchydata/postgres-operator/internal/testing/require"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/patroni"
+	"github.com/radondb/postgres-operator/internal/testing/require"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 func TestReconcilerHandleDelete(t *testing.T) {
@@ -99,8 +99,8 @@ func TestReconcilerHandleDelete(t *testing.T) {
 			beforeDelete: func(t *testing.T, cluster *v1beta1.PostgresCluster) {
 				list := corev1.PodList{}
 				selector, err := labels.Parse(strings.Join([]string{
-					"postgres-operator.crunchydata.com/cluster=" + cluster.Name,
-					"postgres-operator.crunchydata.com/instance",
+					"postgres-operator.radondb.com/cluster=" + cluster.Name,
+					"postgres-operator.radondb.com/instance",
 				}, ","))
 				assert.NilError(t, err)
 				assert.NilError(t, cc.List(ctx, &list,
@@ -110,7 +110,7 @@ func TestReconcilerHandleDelete(t *testing.T) {
 				var primary *corev1.Pod
 				var replica *corev1.Pod
 				for i := range list.Items {
-					if list.Items[i].Labels["postgres-operator.crunchydata.com/role"] == "replica" {
+					if list.Items[i].Labels["postgres-operator.radondb.com/role"] == "replica" {
 						replica = &list.Items[i]
 					} else {
 						primary = &list.Items[i]
@@ -174,8 +174,8 @@ func TestReconcilerHandleDelete(t *testing.T) {
 
 			cluster.Namespace = ns.Name
 			cluster.Name = strings.ToLower(test.name)
-			cluster.Spec.Image = CrunchyPostgresHAImage
-			cluster.Spec.Backups.PGBackRest.Image = CrunchyPGBackRestImage
+			cluster.Spec.Image = RadonDBPostgresHAImage
+			cluster.Spec.Backups.PGBackRest.Image = RadonDBPGBackRestImage
 
 			if test.beforeCreate != nil {
 				test.beforeCreate(t, cluster)
@@ -197,7 +197,7 @@ func TestReconcilerHandleDelete(t *testing.T) {
 				cc.Get(ctx, client.ObjectKeyFromObject(cluster), cluster))
 			assert.Assert(t,
 				sets.NewString(cluster.Finalizers...).
-					Has("postgres-operator.crunchydata.com/finalizer"),
+					Has("postgres-operator.radondb.com/finalizer"),
 				"cluster should immediately have a finalizer")
 
 			// Continue until instances are healthy.
@@ -208,8 +208,8 @@ func TestReconcilerHandleDelete(t *testing.T) {
 
 				list := appsv1.StatefulSetList{}
 				selector, err := labels.Parse(strings.Join([]string{
-					"postgres-operator.crunchydata.com/cluster=" + cluster.Name,
-					"postgres-operator.crunchydata.com/instance",
+					"postgres-operator.radondb.com/cluster=" + cluster.Name,
+					"postgres-operator.radondb.com/instance",
 				}, ","))
 				assert.NilError(t, err)
 				assert.NilError(t, cc.List(ctx, &list,
@@ -254,8 +254,8 @@ func TestReconcilerHandleDelete(t *testing.T) {
 
 					list := corev1.PodList{}
 					selector, err := labels.Parse(strings.Join([]string{
-						"postgres-operator.crunchydata.com/cluster=" + cluster.Name,
-						"postgres-operator.crunchydata.com/instance",
+						"postgres-operator.radondb.com/cluster=" + cluster.Name,
+						"postgres-operator.radondb.com/instance",
 					}, ","))
 					assert.NilError(t, err)
 					assert.NilError(t, cc.List(ctx, &list,
@@ -266,15 +266,15 @@ func TestReconcilerHandleDelete(t *testing.T) {
 
 					// Patroni doesn't use "primary" to identify the primary.
 					return len(instances) == 1 &&
-						instances[0].Labels["postgres-operator.crunchydata.com/role"] == "master", nil
+						instances[0].Labels["postgres-operator.radondb.com/role"] == "master", nil
 				}), "expected one instance, got:\n%+v", instances)
 
 				// Patroni DCS objects should not be deleted yet.
 				{
 					list := corev1.EndpointsList{}
 					selector, err := labels.Parse(strings.Join([]string{
-						"postgres-operator.crunchydata.com/cluster=" + cluster.Name,
-						"postgres-operator.crunchydata.com/patroni",
+						"postgres-operator.radondb.com/cluster=" + cluster.Name,
+						"postgres-operator.radondb.com/patroni",
 					}, ","))
 					assert.NilError(t, err)
 					assert.NilError(t, cc.List(ctx, &list,
@@ -312,8 +312,8 @@ func TestReconcilerHandleDelete(t *testing.T) {
 			assert.NilError(t, wait.Poll(time.Second, Scale(time.Minute/3), func() (bool, error) {
 				list := corev1.EndpointsList{}
 				selector, err := labels.Parse(strings.Join([]string{
-					"postgres-operator.crunchydata.com/cluster=" + cluster.Name,
-					"postgres-operator.crunchydata.com/patroni",
+					"postgres-operator.radondb.com/cluster=" + cluster.Name,
+					"postgres-operator.radondb.com/patroni",
 				}, ","))
 				assert.NilError(t, err)
 				assert.NilError(t, cc.List(ctx, &list,
@@ -400,8 +400,8 @@ func TestReconcilerHandleDeleteNamespace(t *testing.T) {
 
 	cluster.Namespace = ns.Name
 	cluster.Name = strings.ToLower("DeleteNamespace")
-	cluster.Spec.Image = CrunchyPostgresHAImage
-	cluster.Spec.Backups.PGBackRest.Image = CrunchyPGBackRestImage
+	cluster.Spec.Image = RadonDBPostgresHAImage
+	cluster.Spec.Backups.PGBackRest.Image = RadonDBPGBackRestImage
 
 	assert.NilError(t, cc.Create(ctx, cluster))
 
@@ -417,8 +417,8 @@ func TestReconcilerHandleDeleteNamespace(t *testing.T) {
 	assert.NilError(t, wait.Poll(time.Second, Scale(time.Minute), func() (bool, error) {
 		list := appsv1.StatefulSetList{}
 		selector, err := labels.Parse(strings.Join([]string{
-			"postgres-operator.crunchydata.com/cluster=" + cluster.Name,
-			"postgres-operator.crunchydata.com/instance",
+			"postgres-operator.radondb.com/cluster=" + cluster.Name,
+			"postgres-operator.radondb.com/instance",
 		}, ","))
 		assert.NilError(t, err)
 		assert.NilError(t, cc.List(ctx, &list,

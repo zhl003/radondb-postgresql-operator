@@ -30,10 +30,10 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"github.com/crunchydata/postgres-operator/internal/initialize"
-	"github.com/crunchydata/postgres-operator/internal/naming"
-	"github.com/crunchydata/postgres-operator/internal/testing/require"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/initialize"
+	"github.com/radondb/postgres-operator/internal/naming"
+	"github.com/radondb/postgres-operator/internal/testing/require"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 func TestGeneratePGBouncerService(t *testing.T) {
@@ -79,12 +79,12 @@ kind: Service
 		assert.Assert(t, marshalMatches(service.ObjectMeta, `
 creationTimestamp: null
 labels:
-  postgres-operator.crunchydata.com/cluster: pg7
-  postgres-operator.crunchydata.com/role: pgbouncer
+  postgres-operator.radondb.com/cluster: pg7
+  postgres-operator.radondb.com/role: pgbouncer
 name: pg7-pgbouncer
 namespace: ns5
 ownerReferences:
-- apiVersion: postgres-operator.crunchydata.com/v1beta1
+- apiVersion: postgres-operator.radondb.com/v1beta1
   blockOwnerDeletion: true
   controller: true
   kind: PostgresCluster
@@ -101,8 +101,8 @@ ownerReferences:
 		// Always gets a ClusterIP (never None).
 		assert.Equal(t, service.Spec.ClusterIP, "")
 		assert.DeepEqual(t, service.Spec.Selector, map[string]string{
-			"postgres-operator.crunchydata.com/cluster": "pg7",
-			"postgres-operator.crunchydata.com/role":    "pgbouncer",
+			"postgres-operator.radondb.com/cluster": "pg7",
+			"postgres-operator.radondb.com/role":    "pgbouncer",
 		})
 	}
 
@@ -125,14 +125,14 @@ ownerReferences:
 		// Labels present in the metadata.
 		assert.DeepEqual(t, service.ObjectMeta.Labels, map[string]string{
 			"b": "v2",
-			"postgres-operator.crunchydata.com/cluster": "pg7",
-			"postgres-operator.crunchydata.com/role":    "pgbouncer",
+			"postgres-operator.radondb.com/cluster": "pg7",
+			"postgres-operator.radondb.com/role":    "pgbouncer",
 		})
 
 		// Labels not in the selector.
 		assert.DeepEqual(t, service.Spec.Selector, map[string]string{
-			"postgres-operator.crunchydata.com/cluster": "pg7",
-			"postgres-operator.crunchydata.com/role":    "pgbouncer",
+			"postgres-operator.radondb.com/cluster": "pg7",
+			"postgres-operator.radondb.com/role":    "pgbouncer",
 		})
 	})
 
@@ -325,16 +325,16 @@ namespace: ns3
 		// Labels present in the metadata.
 		assert.DeepEqual(t, deploy.ObjectMeta.Labels, map[string]string{
 			"b": "v2",
-			"postgres-operator.crunchydata.com/cluster": "test-cluster",
-			"postgres-operator.crunchydata.com/role":    "pgbouncer",
+			"postgres-operator.radondb.com/cluster": "test-cluster",
+			"postgres-operator.radondb.com/role":    "pgbouncer",
 		})
 
 		// Labels not in the pod selector.
 		assert.DeepEqual(t, deploy.Spec.Selector,
 			&metav1.LabelSelector{
 				MatchLabels: map[string]string{
-					"postgres-operator.crunchydata.com/cluster": "test-cluster",
-					"postgres-operator.crunchydata.com/role":    "pgbouncer",
+					"postgres-operator.radondb.com/cluster": "test-cluster",
+					"postgres-operator.radondb.com/role":    "pgbouncer",
 				},
 			})
 
@@ -346,8 +346,8 @@ namespace: ns3
 		// Labels present in the pod template.
 		assert.DeepEqual(t, deploy.Spec.Template.Labels, map[string]string{
 			"b": "v2",
-			"postgres-operator.crunchydata.com/cluster": "test-cluster",
-			"postgres-operator.crunchydata.com/role":    "pgbouncer",
+			"postgres-operator.radondb.com/cluster": "test-cluster",
+			"postgres-operator.radondb.com/role":    "pgbouncer",
 		})
 	})
 
@@ -380,15 +380,15 @@ shareProcessNamespace: true
 topologySpreadConstraints:
 - labelSelector:
     matchLabels:
-      postgres-operator.crunchydata.com/cluster: test-cluster
-      postgres-operator.crunchydata.com/role: pgbouncer
+      postgres-operator.radondb.com/cluster: test-cluster
+      postgres-operator.radondb.com/role: pgbouncer
   maxSkew: 1
   topologyKey: kubernetes.io/hostname
   whenUnsatisfiable: ScheduleAnyway
 - labelSelector:
     matchLabels:
-      postgres-operator.crunchydata.com/cluster: test-cluster
-      postgres-operator.crunchydata.com/role: pgbouncer
+      postgres-operator.radondb.com/cluster: test-cluster
+      postgres-operator.radondb.com/role: pgbouncer
   maxSkew: 1
   topologyKey: topology.kubernetes.io/zone
   whenUnsatisfiable: ScheduleAnyway

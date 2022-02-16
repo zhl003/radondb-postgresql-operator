@@ -26,8 +26,8 @@ import (
 	"k8s.io/apimachinery/pkg/util/rand"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	"github.com/crunchydata/postgres-operator/internal/initialize"
-	"github.com/crunchydata/postgres-operator/internal/naming"
+	"github.com/radondb/postgres-operator/internal/initialize"
+	"github.com/radondb/postgres-operator/internal/naming"
 )
 
 var tmpDirSizeLimit = resource.MustParse("16Mi")
@@ -39,8 +39,8 @@ const (
 	// nssWrapperDir is the directory in a container for the nss_wrapper passwd and group files
 	nssWrapperDir = "/tmp/nss_wrapper/%s/%s"
 	// uidCommand is the command for setting up nss_wrapper in the container
-	nssWrapperCmd = `NSS_WRAPPER_SUBDIR=postgres CRUNCHY_NSS_USERNAME=postgres ` +
-		`CRUNCHY_NSS_USER_DESC="postgres" /opt/crunchy/bin/nss_wrapper.sh`
+	nssWrapperCmd = `NSS_WRAPPER_SUBDIR=postgres RADONDB_NSS_USERNAME=postgres ` +
+		`RADONDB_NSS_USER_DESC="postgres" /opt/radondb/bin/nss_wrapper.sh`
 )
 
 // addDevSHM adds the shared memory "directory" to a Pod, which is needed by

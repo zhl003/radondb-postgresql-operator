@@ -41,10 +41,10 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	"github.com/crunchydata/postgres-operator/internal/initialize"
-	"github.com/crunchydata/postgres-operator/internal/naming"
-	"github.com/crunchydata/postgres-operator/internal/testing/require"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/initialize"
+	"github.com/radondb/postgres-operator/internal/naming"
+	"github.com/radondb/postgres-operator/internal/testing/require"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 var gvks = []schema.GroupVersionKind{{
@@ -702,12 +702,12 @@ kind: Service
 		assert.Assert(t, marshalMatches(service.ObjectMeta, `
 creationTimestamp: null
 labels:
-  postgres-operator.crunchydata.com/cluster: pg5
-  postgres-operator.crunchydata.com/role: primary
+  postgres-operator.radondb.com/cluster: pg5
+  postgres-operator.radondb.com/role: primary
 name: pg5-primary
 namespace: ns2
 ownerReferences:
-- apiVersion: postgres-operator.crunchydata.com/v1beta1
+- apiVersion: postgres-operator.radondb.com/v1beta1
   blockOwnerDeletion: true
   controller: true
   kind: PostgresCluster
@@ -731,12 +731,12 @@ kind: Endpoints
 metadata:
   creationTimestamp: null
   labels:
-    postgres-operator.crunchydata.com/cluster: pg5
-    postgres-operator.crunchydata.com/role: primary
+    postgres-operator.radondb.com/cluster: pg5
+    postgres-operator.radondb.com/role: primary
   name: pg5-primary
   namespace: ns2
   ownerReferences:
-  - apiVersion: postgres-operator.crunchydata.com/v1beta1
+  - apiVersion: postgres-operator.radondb.com/v1beta1
     blockOwnerDeletion: true
     controller: true
     kind: PostgresCluster
@@ -820,12 +820,12 @@ kind: Service
 	assert.Assert(t, marshalMatches(service.ObjectMeta, `
 creationTimestamp: null
 labels:
-  postgres-operator.crunchydata.com/cluster: pg2
-  postgres-operator.crunchydata.com/role: replica
+  postgres-operator.radondb.com/cluster: pg2
+  postgres-operator.radondb.com/role: replica
 name: pg2-replicas
 namespace: ns1
 ownerReferences:
-- apiVersion: postgres-operator.crunchydata.com/v1beta1
+- apiVersion: postgres-operator.radondb.com/v1beta1
   blockOwnerDeletion: true
   controller: true
   kind: PostgresCluster
@@ -839,8 +839,8 @@ ports:
   protocol: TCP
   targetPort: postgres
 selector:
-  postgres-operator.crunchydata.com/cluster: pg2
-  postgres-operator.crunchydata.com/role: replica
+  postgres-operator.radondb.com/cluster: pg2
+  postgres-operator.radondb.com/role: replica
 type: ClusterIP
 	`))
 
@@ -862,14 +862,14 @@ some: note
 		// Labels present in the metadata.
 		assert.Assert(t, marshalMatches(service.ObjectMeta.Labels, `
 happy: label
-postgres-operator.crunchydata.com/cluster: pg2
-postgres-operator.crunchydata.com/role: replica
+postgres-operator.radondb.com/cluster: pg2
+postgres-operator.radondb.com/role: replica
 		`))
 
 		// Labels not in the selector.
 		assert.Assert(t, marshalMatches(service.Spec.Selector, `
-postgres-operator.crunchydata.com/cluster: pg2
-postgres-operator.crunchydata.com/role: replica
+postgres-operator.radondb.com/cluster: pg2
+postgres-operator.radondb.com/role: replica
 		`))
 	})
 }

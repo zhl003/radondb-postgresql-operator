@@ -6,14 +6,14 @@ commands:
   # because switchover does not recreate any pods.
   - script: |
       kubectl label --namespace="${NAMESPACE}" pods \
-        --selector='postgres-operator.crunchydata.com/role=master' \
+        --selector='postgres-operator.radondb.com/role=master' \
         'testing/role-before=master'
   - script: |
       kubectl label --namespace="${NAMESPACE}" pods \
-        --selector='postgres-operator.crunchydata.com/role=replica' \
+        --selector='postgres-operator.radondb.com/role=replica' \
         'testing/role-before=replica'
 
   # Annotate the cluster to trigger a switchover.
   - script: |
       kubectl annotate --namespace="${NAMESPACE}" postgrescluster/switchover \
-        "postgres-operator.crunchydata.com/trigger-switchover=$(date)"
+        "postgres-operator.radondb.com/trigger-switchover=$(date)"

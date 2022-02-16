@@ -39,14 +39,14 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 	"sigs.k8s.io/controller-runtime/pkg/source"
 
-	"github.com/crunchydata/postgres-operator/internal/logging"
-	"github.com/crunchydata/postgres-operator/internal/pgaudit"
-	"github.com/crunchydata/postgres-operator/internal/pgbackrest"
-	"github.com/crunchydata/postgres-operator/internal/pgbouncer"
-	"github.com/crunchydata/postgres-operator/internal/pgmonitor"
-	"github.com/crunchydata/postgres-operator/internal/pki"
-	"github.com/crunchydata/postgres-operator/internal/postgres"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/logging"
+	"github.com/radondb/postgres-operator/internal/pgaudit"
+	"github.com/radondb/postgres-operator/internal/pgbackrest"
+	"github.com/radondb/postgres-operator/internal/pgbouncer"
+	"github.com/radondb/postgres-operator/internal/pgmonitor"
+	"github.com/radondb/postgres-operator/internal/pki"
+	"github.com/radondb/postgres-operator/internal/postgres"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 const (
@@ -72,8 +72,8 @@ type Reconciler struct {
 }
 
 // +kubebuilder:rbac:groups="",resources=events,verbs=create;patch
-// +kubebuilder:rbac:groups=postgres-operator.crunchydata.com,resources=postgresclusters,verbs=get;list;watch
-// +kubebuilder:rbac:groups=postgres-operator.crunchydata.com,resources=postgresclusters/status,verbs=patch
+// +kubebuilder:rbac:groups=postgres-operator.radondb.com,resources=postgresclusters,verbs=get;list;watch
+// +kubebuilder:rbac:groups=postgres-operator.radondb.com,resources=postgresclusters/status,verbs=patch
 
 // Reconcile reconciles a ConfigMap in a namespace managed by the PostgreSQL Operator
 func (r *Reconciler) Reconcile(
@@ -364,7 +364,7 @@ func (r *Reconciler) patch(
 // creator of such a reference have either "delete" permission on the owner or
 // "update" permission on the owner's "finalizers" subresource.
 // - https://docs.k8s.io/reference/access-authn-authz/admission-controllers/
-// +kubebuilder:rbac:groups=postgres-operator.crunchydata.com,resources=postgresclusters/finalizers,verbs=update
+// +kubebuilder:rbac:groups=postgres-operator.radondb.com,resources=postgresclusters/finalizers,verbs=update
 
 // setControllerReference sets owner as a Controller OwnerReference on controlled.
 // Only one OwnerReference can be a controller, so it returns an error if another

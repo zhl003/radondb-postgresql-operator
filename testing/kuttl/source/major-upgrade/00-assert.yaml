@@ -1,4 +1,4 @@
-apiVersion: postgres-operator.crunchydata.com/v1beta1
+apiVersion: postgres-operator.radondb.com/v1beta1
 kind: PostgresCluster
 metadata:
   name: major-upgrade
@@ -15,7 +15,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   labels:
-    postgres-operator.crunchydata.com/cluster: major-upgrade
-    postgres-operator.crunchydata.com/pgbackrest-backup: replica-create
+    postgres-operator.radondb.com/cluster: major-upgrade
+    postgres-operator.radondb.com/pgbackrest-backup: replica-create
 status:
   succeeded: 1

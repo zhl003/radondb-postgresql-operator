@@ -26,10 +26,10 @@ import (
 	cruntime "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 
-	"github.com/crunchydata/postgres-operator/internal/controller/postgrescluster"
-	"github.com/crunchydata/postgres-operator/internal/controller/runtime"
-	"github.com/crunchydata/postgres-operator/internal/logging"
-	"github.com/crunchydata/postgres-operator/internal/upgradecheck"
+	"github.com/radondb/postgres-operator/internal/controller/postgrescluster"
+	"github.com/radondb/postgres-operator/internal/controller/runtime"
+	"github.com/radondb/postgres-operator/internal/logging"
+	"github.com/radondb/postgres-operator/internal/upgradecheck"
 )
 
 var versionString string
@@ -44,7 +44,7 @@ func assertNoError(err error) {
 func initLogging() {
 	// Configure a singleton that treats logr.Logger.V(1) as logrus.DebugLevel.
 	var verbosity int
-	if strings.EqualFold(os.Getenv("CRUNCHY_DEBUG"), "true") {
+	if strings.EqualFold(os.Getenv("RADONDB_DEBUG"), "true") {
 		verbosity = 1
 	}
 	logging.SetLogFunc(verbosity, logging.Logrus(os.Stdout, versionString, 1))

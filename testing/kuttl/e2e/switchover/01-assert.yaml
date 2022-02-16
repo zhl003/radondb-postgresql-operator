@@ -1,5 +1,5 @@
 ---
-apiVersion: postgres-operator.crunchydata.com/v1beta1
+apiVersion: postgres-operator.radondb.com/v1beta1
 kind: PostgresCluster
 metadata:
   name: switchover

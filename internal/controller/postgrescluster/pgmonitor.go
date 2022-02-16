@@ -24,23 +24,23 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"github.com/crunchydata/postgres-operator/internal/config"
-	"github.com/crunchydata/postgres-operator/internal/initialize"
-	"github.com/crunchydata/postgres-operator/internal/logging"
-	"github.com/crunchydata/postgres-operator/internal/naming"
-	"github.com/crunchydata/postgres-operator/internal/pgmonitor"
-	"github.com/crunchydata/postgres-operator/internal/postgres"
-	pgpassword "github.com/crunchydata/postgres-operator/internal/postgres/password"
-	"github.com/crunchydata/postgres-operator/internal/util"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/config"
+	"github.com/radondb/postgres-operator/internal/initialize"
+	"github.com/radondb/postgres-operator/internal/logging"
+	"github.com/radondb/postgres-operator/internal/naming"
+	"github.com/radondb/postgres-operator/internal/pgmonitor"
+	"github.com/radondb/postgres-operator/internal/postgres"
+	pgpassword "github.com/radondb/postgres-operator/internal/postgres/password"
+	"github.com/radondb/postgres-operator/internal/util"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 const (
 	exporterPort = int32(9187)
 
-	// TODO: With the current implementation of the crunchy-postgres-exporter
+	// TODO: With the current implementation of the radondb-postgres-exporter
 	// it makes sense to hard-code the database. When moving away from the
-	// crunchy-postgres-exporter start.sh script we should re-evaluate always
+	// radondb-postgres-exporter start.sh script we should re-evaluate always
 	// setting the exporter database to `postgres`.
 	exporterDB = "postgres"
 

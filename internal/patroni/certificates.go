@@ -18,7 +18,7 @@ package patroni
 import (
 	corev1 "k8s.io/api/core/v1"
 
-	"github.com/crunchydata/postgres-operator/internal/pki"
+	"github.com/radondb/postgres-operator/internal/pki"
 )
 
 const (

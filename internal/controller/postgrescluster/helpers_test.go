@@ -34,18 +34,18 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 	"sigs.k8s.io/yaml"
 
-	"github.com/crunchydata/postgres-operator/internal/controller/runtime"
-	"github.com/crunchydata/postgres-operator/internal/initialize"
-	"github.com/crunchydata/postgres-operator/internal/testing/cmp"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/controller/runtime"
+	"github.com/radondb/postgres-operator/internal/initialize"
+	"github.com/radondb/postgres-operator/internal/testing/cmp"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 var (
 	//TODO(tjmoore4): With the new RELATED_IMAGES defaulting behavior, tests could be refactored
 	// to reference those environment variables instead of hard coded image values
-	CrunchyPostgresHAImage = "registry.developers.crunchydata.com/crunchydata/crunchy-postgres:centos8-13.5-0"
-	CrunchyPGBackRestImage = "registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:centos8-2.36-0"
-	CrunchyPGBouncerImage  = "registry.developers.crunchydata.com/crunchydata/crunchy-pgbouncer:centos8-1.16-0"
+	RadonDBPostgresHAImage = "docker.io/radondb/radondb-postgres:centos8-13.5-0"
+	RadonDBPGBackRestImage = "docker.io/radondb/radondb-pgbackrest:centos8-2.36-0"
+	RadonDBPGBouncerImage  = "docker.io/radondb/radondb-pgbouncer:centos8-1.16-0"
 )
 
 // Scale extends d according to PGO_TEST_TIMEOUT_SCALE.
@@ -178,7 +178,7 @@ func testCluster() *v1beta1.PostgresCluster {
 		},
 		Spec: v1beta1.PostgresClusterSpec{
 			PostgresVersion: 13,
-			Image:           CrunchyPostgresHAImage,
+			Image:           RadonDBPostgresHAImage,
 			ImagePullSecrets: []corev1.LocalObjectReference{{
 				Name: "myImagePullSecret"},
 			},
@@ -189,7 +189,7 @@ func testCluster() *v1beta1.PostgresCluster {
 			}},
 			Backups: v1beta1.Backups{
 				PGBackRest: v1beta1.PGBackRestArchive{
-					Image: CrunchyPGBackRestImage,
+					Image: RadonDBPGBackRestImage,
 					Repos: []v1beta1.PGBackRestRepo{{
 						Name: "repo1",
 						Volume: &v1beta1.RepoPVC{
@@ -200,7 +200,7 @@ func testCluster() *v1beta1.PostgresCluster {
 			},
 			Proxy: &v1beta1.PostgresProxySpec{
 				PGBouncer: &v1beta1.PGBouncerPodSpec{
-					Image: CrunchyPGBouncerImage,
+					Image: RadonDBPGBouncerImage,
 				},
 			},
 		},

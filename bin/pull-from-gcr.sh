@@ -19,7 +19,7 @@ REGISTRY='us.gcr.io/container-suite'
 VERSION=$PGO_IMAGE_TAG
 IMAGES=(
     postgres-operator
-    crunchy-postgres-exporter
+    radondb-postgres-exporter
 )
 
 function echo_green() {
@@ -36,7 +36,7 @@ for image in "${IMAGES[@]}"
 do
     echo_green "=> Pulling ${REGISTRY?}/${image?}:${VERSION?}.."
     docker pull ${REGISTRY?}/${image?}:${VERSION?}
-    docker tag ${REGISTRY?}/${image?}:${VERSION?} crunchydata/${image?}:${VERSION?}
+    docker tag ${REGISTRY?}/${image?}:${VERSION?} radondb/${image?}:${VERSION?}
 done
 
 echo_green "=> Done!"

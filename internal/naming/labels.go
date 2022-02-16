@@ -20,7 +20,7 @@ import (
 )
 
 const (
-	labelPrefix = "postgres-operator.crunchydata.com/"
+	labelPrefix = "postgres-operator.radondb.com/"
 
 	// LabelCluster et al. provides the fundamental labels for Postgres instances
 	LabelCluster     = labelPrefix + "cluster"
@@ -83,7 +83,7 @@ const (
 
 	// LabelPGMonitorDiscovery is the label added to Pods running the "exporter" container to
 	// support discovery by Prometheus according to pgMonitor configuration
-	LabelPGMonitorDiscovery = labelPrefix + "crunchy-postgres-exporter"
+	LabelPGMonitorDiscovery = labelPrefix + "radondb-postgres-exporter"
 
 	// LabelPGUpgrade is used to indicate a PostgreSQL major upgrade Job
 	LabelPGUpgrade = labelPrefix + "pgupgrade"

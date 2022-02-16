@@ -6,8 +6,8 @@ commands:
       PRIMARY=$(
         kubectl get pod --namespace "${NAMESPACE}" \
           --output name --selector '
-            postgres-operator.crunchydata.com/cluster=original,
-            postgres-operator.crunchydata.com/role=master'
+            postgres-operator.radondb.com/cluster=original,
+            postgres-operator.radondb.com/role=master'
       )
 
       # Wait for the data to be sent to the WAL archive. A prior step reset the

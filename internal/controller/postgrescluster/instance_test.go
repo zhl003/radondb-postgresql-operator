@@ -49,10 +49,10 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	"github.com/crunchydata/postgres-operator/internal/initialize"
-	"github.com/crunchydata/postgres-operator/internal/naming"
-	"github.com/crunchydata/postgres-operator/internal/testing/require"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/initialize"
+	"github.com/radondb/postgres-operator/internal/naming"
+	"github.com/radondb/postgres-operator/internal/testing/require"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 func TestInstanceIsRunning(t *testing.T) {
@@ -168,8 +168,8 @@ func TestNewObservedInstances(t *testing.T) {
 					ObjectMeta: metav1.ObjectMeta{
 						Name: "some-pod-name",
 						Labels: map[string]string{
-							"postgres-operator.crunchydata.com/instance-set": "missing",
-							"postgres-operator.crunchydata.com/instance":     "the-name",
+							"postgres-operator.radondb.com/instance-set": "missing",
+							"postgres-operator.radondb.com/instance":     "the-name",
 						},
 					},
 				},
@@ -201,7 +201,7 @@ func TestNewObservedInstances(t *testing.T) {
 					ObjectMeta: metav1.ObjectMeta{
 						Name: "the-name",
 						Labels: map[string]string{
-							"postgres-operator.crunchydata.com/instance-set": "missing",
+							"postgres-operator.radondb.com/instance-set": "missing",
 						},
 					},
 				},
@@ -236,7 +236,7 @@ func TestNewObservedInstances(t *testing.T) {
 					ObjectMeta: metav1.ObjectMeta{
 						Name: "the-name",
 						Labels: map[string]string{
-							"postgres-operator.crunchydata.com/instance-set": "00",
+							"postgres-operator.radondb.com/instance-set": "00",
 						},
 					},
 				},
@@ -246,8 +246,8 @@ func TestNewObservedInstances(t *testing.T) {
 					ObjectMeta: metav1.ObjectMeta{
 						Name: "some-pod-name",
 						Labels: map[string]string{
-							"postgres-operator.crunchydata.com/instance-set": "00",
-							"postgres-operator.crunchydata.com/instance":     "the-name",
+							"postgres-operator.radondb.com/instance-set": "00",
+							"postgres-operator.radondb.com/instance":     "the-name",
 						},
 					},
 				},
@@ -1335,25 +1335,25 @@ func TestGenerateInstanceStatefulSetIntent(t *testing.T) {
 			assert.Assert(t, marshalMatches(ss.Spec.Template.Spec.TopologySpreadConstraints, `
 - labelSelector:
     matchExpressions:
-    - key: postgres-operator.crunchydata.com/data
+    - key: postgres-operator.radondb.com/data
       operator: In
       values:
       - postgres
       - pgbackrest
     matchLabels:
-      postgres-operator.crunchydata.com/cluster: hippo
+      postgres-operator.radondb.com/cluster: hippo
   maxSkew: 1
   topologyKey: kubernetes.io/hostname
   whenUnsatisfiable: ScheduleAnyway
 - labelSelector:
     matchExpressions:
-    - key: postgres-operator.crunchydata.com/data
+    - key: postgres-operator.radondb.com/data
       operator: In
       values:
       - postgres
       - pgbackrest
     matchLabels:
-      postgres-operator.crunchydata.com/cluster: hippo
+      postgres-operator.radondb.com/cluster: hippo
   maxSkew: 1
   topologyKey: topology.kubernetes.io/zone
   whenUnsatisfiable: ScheduleAnyway
@@ -1382,36 +1382,36 @@ func TestGenerateInstanceStatefulSetIntent(t *testing.T) {
 			assert.Assert(t, marshalMatches(ss.Spec.Template.Spec.TopologySpreadConstraints, `
 - labelSelector:
     matchExpressions:
-    - key: postgres-operator.crunchydata.com/cluster
+    - key: postgres-operator.radondb.com/cluster
       operator: In
       values:
       - somename
-    - key: postgres-operator.crunchydata.com/data
+    - key: postgres-operator.radondb.com/data
       operator: Exists
   maxSkew: 1
   topologyKey: kubernetes.io/hostname
   whenUnsatisfiable: ScheduleAnyway
 - labelSelector:
     matchExpressions:
-    - key: postgres-operator.crunchydata.com/data
+    - key: postgres-operator.radondb.com/data
       operator: In
       values:
       - postgres
       - pgbackrest
     matchLabels:
-      postgres-operator.crunchydata.com/cluster: hippo
+      postgres-operator.radondb.com/cluster: hippo
   maxSkew: 1
   topologyKey: kubernetes.io/hostname
   whenUnsatisfiable: ScheduleAnyway
 - labelSelector:
     matchExpressions:
-    - key: postgres-operator.crunchydata.com/data
+    - key: postgres-operator.radondb.com/data
       operator: In
       values:
       - postgres
       - pgbackrest
     matchLabels:
-      postgres-operator.crunchydata.com/cluster: hippo
+      postgres-operator.radondb.com/cluster: hippo
   maxSkew: 1
   topologyKey: topology.kubernetes.io/zone
   whenUnsatisfiable: ScheduleAnyway
@@ -1465,11 +1465,11 @@ func TestGenerateInstanceStatefulSetIntent(t *testing.T) {
 			assert.Assert(t, marshalMatches(ss.Spec.Template.Spec.TopologySpreadConstraints,
 				`- labelSelector:
     matchExpressions:
-    - key: postgres-operator.crunchydata.com/cluster
+    - key: postgres-operator.radondb.com/cluster
       operator: In
       values:
       - somename
-    - key: postgres-operator.crunchydata.com/data
+    - key: postgres-operator.radondb.com/data
       operator: Exists
   maxSkew: 1
   topologyKey: kubernetes.io/hostname
@@ -2645,7 +2645,7 @@ func fakeUpgradeCluster(clusterName, namespace, clusterUID string) *v1beta1.Post
 			ImagePullSecrets: []corev1.LocalObjectReference{{
 				Name: "myImagePullSecret"},
 			},
-			Image: "example.com/crunchy-postgres-ha:test",
+			Image: "example.com/radondb-postgres-ha:test",
 			InstanceSets: []v1beta1.PostgresInstanceSetSpec{{
 				Name: "instance1",
 				DataVolumeClaimSpec: corev1.PersistentVolumeClaimSpec{

@@ -33,11 +33,11 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 
-	"github.com/crunchydata/postgres-operator/internal/initialize"
-	"github.com/crunchydata/postgres-operator/internal/naming"
-	"github.com/crunchydata/postgres-operator/internal/testing/cmp"
-	"github.com/crunchydata/postgres-operator/internal/testing/require"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/initialize"
+	"github.com/radondb/postgres-operator/internal/naming"
+	"github.com/radondb/postgres-operator/internal/testing/cmp"
+	"github.com/radondb/postgres-operator/internal/testing/require"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 func TestGeneratePGAdminConfigMap(t *testing.T) {
@@ -84,12 +84,12 @@ kind: ConfigMap
 		assert.Assert(t, cmp.MarshalMatches(configmap.ObjectMeta, `
 creationTimestamp: null
 labels:
-  postgres-operator.crunchydata.com/cluster: pg1
-  postgres-operator.crunchydata.com/role: pgadmin
+  postgres-operator.radondb.com/cluster: pg1
+  postgres-operator.radondb.com/role: pgadmin
 name: pg1-pgadmin
 namespace: some-ns
 ownerReferences:
-- apiVersion: postgres-operator.crunchydata.com/v1beta1
+- apiVersion: postgres-operator.radondb.com/v1beta1
   blockOwnerDeletion: true
   controller: true
   kind: PostgresCluster
@@ -123,8 +123,8 @@ ownerReferences:
 		// Labels present in the metadata.
 		assert.DeepEqual(t, configmap.ObjectMeta.Labels, map[string]string{
 			"c": "v7", "d": "v4", "f": "v8",
-			"postgres-operator.crunchydata.com/cluster": "pg1",
-			"postgres-operator.crunchydata.com/role":    "pgadmin",
+			"postgres-operator.radondb.com/cluster": "pg1",
+			"postgres-operator.radondb.com/role":    "pgadmin",
 		})
 	})
 }
@@ -172,12 +172,12 @@ kind: Service
 		assert.Assert(t, marshalMatches(service.ObjectMeta, `
 creationTimestamp: null
 labels:
-  postgres-operator.crunchydata.com/cluster: my-cluster
-  postgres-operator.crunchydata.com/role: pgadmin
+  postgres-operator.radondb.com/cluster: my-cluster
+  postgres-operator.radondb.com/role: pgadmin
 name: my-cluster-pgadmin
 namespace: my-ns
 ownerReferences:
-- apiVersion: postgres-operator.crunchydata.com/v1beta1
+- apiVersion: postgres-operator.radondb.com/v1beta1
   blockOwnerDeletion: true
   controller: true
   kind: PostgresCluster
@@ -194,8 +194,8 @@ ownerReferences:
 		// Always gets a ClusterIP (never None).
 		assert.Equal(t, service.Spec.ClusterIP, "")
 		assert.DeepEqual(t, service.Spec.Selector, map[string]string{
-			"postgres-operator.crunchydata.com/cluster": "my-cluster",
-			"postgres-operator.crunchydata.com/role":    "pgadmin",
+			"postgres-operator.radondb.com/cluster": "my-cluster",
+			"postgres-operator.radondb.com/role":    "pgadmin",
 		})
 	}
 
@@ -218,14 +218,14 @@ ownerReferences:
 		// Labels present in the metadata.
 		assert.DeepEqual(t, service.ObjectMeta.Labels, map[string]string{
 			"b": "v2",
-			"postgres-operator.crunchydata.com/cluster": "my-cluster",
-			"postgres-operator.crunchydata.com/role":    "pgadmin",
+			"postgres-operator.radondb.com/cluster": "my-cluster",
+			"postgres-operator.radondb.com/role":    "pgadmin",
 		})
 
 		// Labels not in the selector.
 		assert.DeepEqual(t, service.Spec.Selector, map[string]string{
-			"postgres-operator.crunchydata.com/cluster": "my-cluster",
-			"postgres-operator.crunchydata.com/role":    "pgadmin",
+			"postgres-operator.radondb.com/cluster": "my-cluster",
+			"postgres-operator.radondb.com/role":    "pgadmin",
 		})
 	})
 
@@ -407,9 +407,9 @@ func TestReconcilePGAdminStatefulSet(t *testing.T) {
 		assert.Assert(t, cmp.MarshalMatches(template.ObjectMeta, `
 creationTimestamp: null
 labels:
-  postgres-operator.crunchydata.com/cluster: test-cluster
-  postgres-operator.crunchydata.com/data: pgadmin
-  postgres-operator.crunchydata.com/role: pgadmin
+  postgres-operator.radondb.com/cluster: test-cluster
+  postgres-operator.radondb.com/data: pgadmin
+  postgres-operator.radondb.com/role: pgadmin
 		`))
 		assert.Assert(t, cmp.MarshalMatches(template.Spec, `
 automountServiceAccountToken: false
@@ -518,9 +518,9 @@ annotations:
 creationTimestamp: null
 labels:
   label1: labelvalue
-  postgres-operator.crunchydata.com/cluster: custom-cluster
-  postgres-operator.crunchydata.com/data: pgadmin
-  postgres-operator.crunchydata.com/role: pgadmin
+  postgres-operator.radondb.com/cluster: custom-cluster
+  postgres-operator.radondb.com/data: pgadmin
+  postgres-operator.radondb.com/role: pgadmin
 		`))
 		assert.Assert(t, cmp.MarshalMatches(template.Spec, `
 affinity:
@@ -547,11 +547,11 @@ tolerations:
 topologySpreadConstraints:
 - labelSelector:
     matchExpressions:
-    - key: postgres-operator.crunchydata.com/cluster
+    - key: postgres-operator.radondb.com/cluster
       operator: In
       values:
       - somename
-    - key: postgres-operator.crunchydata.com/data
+    - key: postgres-operator.radondb.com/data
       operator: Exists
   maxSkew: 1
   topologyKey: fakekey

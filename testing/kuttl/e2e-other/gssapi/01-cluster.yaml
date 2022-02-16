@@ -1,4 +1,4 @@
-apiVersion: postgres-operator.crunchydata.com/v1beta1
+apiVersion: postgres-operator.radondb.com/v1beta1
 kind: PostgresCluster
 metadata:
   name: gssapi
@@ -14,7 +14,7 @@ spec:
       postgresql:
         pg_hba:
         - host postgres postgres 0.0.0.0/0 scram-sha-256
-        - host all krb5hippo@PGO.CRUNCHYDATA.COM 0.0.0.0/0 gss
+        - host all krb5hippo@PGO.RADONDB.COM 0.0.0.0/0 gss
         parameters:
           krb_server_keyfile: /etc/postgres/krb5.keytab
   users:

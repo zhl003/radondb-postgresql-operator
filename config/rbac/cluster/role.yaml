@@ -100,7 +100,7 @@ rules:
   - patch
   - watch
 - apiGroups:
-  - postgres-operator.crunchydata.com
+  - postgres-operator.radondb.com
   resources:
   - postgresclusters
   verbs:
@@ -109,13 +109,13 @@ rules:
   - patch
   - watch
 - apiGroups:
-  - postgres-operator.crunchydata.com
+  - postgres-operator.radondb.com
   resources:
   - postgresclusters/finalizers
   verbs:
   - update
 - apiGroups:
-  - postgres-operator.crunchydata.com
+  - postgres-operator.radondb.com
   resources:
   - postgresclusters/status
   verbs:

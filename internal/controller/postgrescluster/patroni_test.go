@@ -38,10 +38,10 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	"github.com/crunchydata/postgres-operator/internal/initialize"
-	"github.com/crunchydata/postgres-operator/internal/naming"
-	"github.com/crunchydata/postgres-operator/internal/testing/require"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/initialize"
+	"github.com/radondb/postgres-operator/internal/naming"
+	"github.com/radondb/postgres-operator/internal/testing/require"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 func TestGeneratePatroniLeaderLeaseService(t *testing.T) {
@@ -63,12 +63,12 @@ kind: Service
 		assert.Assert(t, marshalMatches(service.ObjectMeta, `
 creationTimestamp: null
 labels:
-  postgres-operator.crunchydata.com/cluster: pg2
-  postgres-operator.crunchydata.com/patroni: pg2-ha
+  postgres-operator.radondb.com/cluster: pg2
+  postgres-operator.radondb.com/patroni: pg2-ha
 name: pg2-ha
 namespace: ns1
 ownerReferences:
-- apiVersion: postgres-operator.crunchydata.com/v1beta1
+- apiVersion: postgres-operator.radondb.com/v1beta1
   blockOwnerDeletion: true
   controller: true
   kind: PostgresCluster
@@ -115,8 +115,8 @@ ownerReferences:
 		// Labels present in the metadata.
 		assert.DeepEqual(t, service.ObjectMeta.Labels, map[string]string{
 			"b": "v2",
-			"postgres-operator.crunchydata.com/cluster": "pg2",
-			"postgres-operator.crunchydata.com/patroni": "pg2-ha",
+			"postgres-operator.radondb.com/cluster": "pg2",
+			"postgres-operator.radondb.com/patroni": "pg2-ha",
 		})
 
 		// Labels not in the selector.

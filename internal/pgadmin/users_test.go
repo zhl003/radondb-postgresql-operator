@@ -28,9 +28,9 @@ import (
 	"gotest.tools/v3/assert"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"github.com/crunchydata/postgres-operator/internal/initialize"
-	"github.com/crunchydata/postgres-operator/internal/testing/require"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/initialize"
+	"github.com/radondb/postgres-operator/internal/testing/require"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 func TestWriteUsersInPGAdmin(t *testing.T) {
@@ -125,7 +125,7 @@ with create_app().app_context():
             ).order_by("id").first() or
             ServerGroup()
         )
-        group.name = "Crunchy PostgreSQL Operator"
+        group.name = "RadonDB PostgreSQL Operator"
         group.user_id = user.id
         db.session.add(group)
         db.session.commit()

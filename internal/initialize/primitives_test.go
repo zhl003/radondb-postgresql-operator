@@ -20,7 +20,7 @@ import (
 
 	"gotest.tools/v3/assert"
 
-	"github.com/crunchydata/postgres-operator/internal/initialize"
+	"github.com/radondb/postgres-operator/internal/initialize"
 )
 
 func TestBool(t *testing.T) {

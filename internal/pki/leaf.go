@@ -26,7 +26,7 @@ import (
 	"net"
 	"time"
 
-	"github.com/crunchydata/postgres-operator/internal/logging"
+	"github.com/radondb/postgres-operator/internal/logging"
 )
 
 const (

@@ -27,10 +27,10 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/yaml"
 
-	"github.com/crunchydata/postgres-operator/internal/postgres"
-	"github.com/crunchydata/postgres-operator/internal/testing/cmp"
-	"github.com/crunchydata/postgres-operator/internal/testing/require"
-	"github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1"
+	"github.com/radondb/postgres-operator/internal/postgres"
+	"github.com/radondb/postgres-operator/internal/testing/cmp"
+	"github.com/radondb/postgres-operator/internal/testing/require"
+	"github.com/radondb/postgres-operator/pkg/apis/postgres-operator.radondb.com/v1beta1"
 )
 
 func TestClusterYAML(t *testing.T) {
@@ -62,10 +62,10 @@ ctl:
   keyfile: null
 kubernetes:
   labels:
-    postgres-operator.crunchydata.com/cluster: cluster-name
+    postgres-operator.radondb.com/cluster: cluster-name
   namespace: some-namespace
-  role_label: postgres-operator.crunchydata.com/role
-  scope_label: postgres-operator.crunchydata.com/patroni
+  role_label: postgres-operator.radondb.com/role
+  scope_label: postgres-operator.radondb.com/patroni
   use_endpoints: true
 postgresql:
   authentication:
@@ -74,13 +74,13 @@ postgresql:
       sslkey: /tmp/replication/tls.key
       sslmode: verify-ca
       sslrootcert: /tmp/replication/ca.crt
-      username: _crunchyrepl
+      username: _radondbrepl
     rewind:
       sslcert: /tmp/replication/tls.crt
       sslkey: /tmp/replication/tls.key
       sslmode: verify-ca
       sslrootcert: /tmp/replication/ca.crt
-      username: _crunchyrepl
+      username: _radondbrepl
 restapi:
   cafile: /etc/patroni/~postgres-operator/patroni.ca-roots
   certfile: /etc/patroni/~postgres-operator/patroni.crt+key

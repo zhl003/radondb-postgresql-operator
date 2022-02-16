@@ -19,4 +19,4 @@ commands:
 
       # Annotate the cluster to trigger the restore.
       kubectl annotate --namespace="${NAMESPACE}" postgrescluster/original \
-        'postgres-operator.crunchydata.com/pgbackrest-restore=one'
+        'postgres-operator.radondb.com/pgbackrest-restore=one'

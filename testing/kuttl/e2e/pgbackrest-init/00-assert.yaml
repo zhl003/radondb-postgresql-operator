@@ -1,4 +1,4 @@
-apiVersion: postgres-operator.crunchydata.com/v1beta1
+apiVersion: postgres-operator.radondb.com/v1beta1
 kind: PostgresCluster
 metadata:
   name: init-pgbackrest
@@ -22,9 +22,9 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   labels:
-    postgres-operator.crunchydata.com/cluster: init-pgbackrest
-    postgres-operator.crunchydata.com/pgbackrest-backup: replica-create
-    postgres-operator.crunchydata.com/pgbackrest-repo: repo1
+    postgres-operator.radondb.com/cluster: init-pgbackrest
+    postgres-operator.radondb.com/pgbackrest-backup: replica-create
+    postgres-operator.radondb.com/pgbackrest-repo: repo1
 status:
   succeeded: 1
 ---
@@ -33,11 +33,11 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
-    postgres-operator.crunchydata.com/cluster: init-pgbackrest
-    postgres-operator.crunchydata.com/data: pgbackrest
-    postgres-operator.crunchydata.com/pgbackrest: ""
-    postgres-operator.crunchydata.com/pgbackrest-repo: repo1
-    postgres-operator.crunchydata.com/pgbackrest-volume: ""
+    postgres-operator.radondb.com/cluster: init-pgbackrest
+    postgres-operator.radondb.com/data: pgbackrest
+    postgres-operator.radondb.com/pgbackrest: ""
+    postgres-operator.radondb.com/pgbackrest-repo: repo1
+    postgres-operator.radondb.com/pgbackrest-volume: ""
   name: init-pgbackrest-repo1
 spec:
   accessModes:
@@ -52,11 +52,11 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
-    postgres-operator.crunchydata.com/cluster: init-pgbackrest
-    postgres-operator.crunchydata.com/data: pgbackrest
-    postgres-operator.crunchydata.com/pgbackrest: ""
-    postgres-operator.crunchydata.com/pgbackrest-repo: repo2
-    postgres-operator.crunchydata.com/pgbackrest-volume: ""
+    postgres-operator.radondb.com/cluster: init-pgbackrest
+    postgres-operator.radondb.com/data: pgbackrest
+    postgres-operator.radondb.com/pgbackrest: ""
+    postgres-operator.radondb.com/pgbackrest-repo: repo2
+    postgres-operator.radondb.com/pgbackrest-volume: ""
   name: init-pgbackrest-repo2
 spec:
   accessModes:

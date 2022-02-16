@@ -9,7 +9,7 @@ spec:
       restartPolicy: "OnFailure"
       containers:
         - name: psql
-          image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:centos8-14.1-0
+          image: docker.io/radondb/radondb-postgres:centos8-14.1-0
           command:
             - psql
             - "$(PGURI)"
