@@ -31,14 +31,5 @@ RUN if [ "$BASEOS" = "centos8" ]; then \
     ${PACKAGER} -qy module disable postgresql ; \
 fi
 
-# Create module file to disable postgres module, microdnf cannot do this with the current version
-RUN if [ "$BASEOS" = "ubi8" ] ; then \
-    echo "[postgresql]"  >> /etc/dnf/modules.d/postgresql.module \
-    && echo "name=postgresql"  >> /etc/dnf/modules.d/postgresql.module \
-    && echo "stream=10"  >> /etc/dnf/modules.d/postgresql.module \
-    && echo "profiles="  >> /etc/dnf/modules.d/postgresql.module \
-    && echo "state=disabled"  >> /etc/dnf/modules.d/postgresql.module ; \
-fi
-
 # RadonDB PostgreSQL repository
 ADD conf/radondbpg${PGVERSION}.repo /etc/yum.repos.d/
