@@ -1,0 +1,35 @@
+---
+## Provide image repository and tag
+image:
+  image: rdocker.io/radondb/postgres-operator:centos8-v3.0.0
+
+relatedImages:
+  postgres_14:
+    image: docker.io/radondb/radondb-postgres-ha:centos8-14.1-4.7.1
+  postgres_14_gis_3.1:
+    image: docker.io/radondb/radondb-postgres-gis-ha:centos8-14.1-3.1-4.7.1
+  postgres_13:
+    image: docker.io/radondb/radondb-postgres-ha:centos8-13.3-4.7.1
+  postgres_13_gis_3.1:
+    image: docker.io/radondb/radondb-postgres-gis-ha:centos8-13.3-3.1-4.7.1
+  pgbackrest:
+    image: docker.io/radondb/radondb-pgbackrest:centos8-14.1-4.7.1
+  pgbouncer:
+    image: docker.io/radondb/radondb-pgbouncer:centos8-14.1-4.7.1
+  pgexporter:
+    image:  docker.io/radondb/radondb-postgres-exporter:centos8-v3.0.0
+
+# singleNamespace determines how to install PGO to watch namesapces. If set to
+# false, PGO will watch for Postgres clusters in all namesapces Setting to
+# "true" will instruct PGO to only watch for Postgres clusters in the namespace
+# that it is installed in. Defaults to the value below.
+singleNamespace: false
+
+# debug allows you to enable or disable the "debug" level of logging.
+# Defaults to the value below.
+debug: true
+
+# imagePullSecrets defines any image pull secrets to use
+# **only for installation**. This is an array that uses the  image pull secret
+# format, i.e. "name: value"
+imagePullSecrets: []
