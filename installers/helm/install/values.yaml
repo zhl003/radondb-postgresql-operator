@@ -1,7 +1,7 @@
 ---
 ## Provide image repository and tag
 image:
-  image: rdocker.io/radondb/postgres-operator:centos8-v3.0.0
+  image: docker.io/radondb/postgres-operator:centos8-v3.0.0
 
 relatedImages:
   postgres_14:
