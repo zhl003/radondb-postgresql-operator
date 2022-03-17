@@ -10,8 +10,11 @@ rules:
   resources:
   - poddisruptionbudgets
   verbs:
-  - list
+  - create
+  - delete
   - get
+  - list
+  - patch
   - watch
 - apiGroups:
   - ''
