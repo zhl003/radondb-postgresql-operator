@@ -556,7 +556,7 @@ func TestAddServerToInstancePod(t *testing.T) {
   resources: {}
 - command:
   - pgbackrest
-  - server-start
+  - server
   livenessProbe:
     exec:
       command:
@@ -686,7 +686,7 @@ func TestAddServerToRepoPod(t *testing.T) {
   resources: {}
 - command:
   - pgbackrest
-  - server-start
+  - server
   livenessProbe:
     exec:
       command:

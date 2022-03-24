@@ -25,5 +25,5 @@ for image in "${IMAGES[@]}"
 do
 	docker tag $PGO_IMAGE_PREFIX/$image:$PGO_IMAGE_TAG   \
 		$PGO_IMAGE_PREFIX/$image:$PGO_IMAGE_TAG
-		docker -- push $PGO_IMAGE_PREFIX/$image:$PGO_IMAGE_TAG
+		docker push $PGO_IMAGE_PREFIX/$image:$PGO_IMAGE_TAG
 done

@@ -555,7 +555,7 @@ func TestAddPGBackRestToInstancePodSpec(t *testing.T) {
   resources: {}
 - command:
   - pgbackrest
-  - server-start
+  - server
   livenessProbe:
     exec:
       command:

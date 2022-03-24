@@ -481,6 +481,6 @@ func serverConfig(cluster *v1beta1.PostgresCluster) iniSectionSet {
 
 	return iniSectionSet{
 		"global":              global,
-		"global:server-start": server,
+		"global:server": server,
 	}
 }
