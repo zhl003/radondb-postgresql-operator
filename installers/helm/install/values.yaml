@@ -1,23 +1,17 @@
 ---
 ## Provide image repository and tag
 image:
-  image: docker.io/radondb/postgres-operator:centos8-v3.0.0
+  image: docker.io/zhonghl003/postgres-operator:debian-3.0.0
 
 relatedImages:
-  postgres_14:
-    image: docker.io/radondb/radondb-postgres-ha:centos8-14.1-4.7.1
   postgres_14_gis_3.1:
-    image: docker.io/radondb/radondb-postgres-gis-ha:centos8-14.1-3.1-4.7.1
-  postgres_13:
-    image: docker.io/radondb/radondb-postgres-ha:centos8-13.3-4.7.1
-  postgres_13_gis_3.1:
-    image: docker.io/radondb/radondb-postgres-gis-ha:centos8-13.3-3.1-4.7.1
+    image: docker.io/zhonghl003/radondb-postgres-gis:debian-14.2-3.1-3.0.0
   pgbackrest:
-    image: docker.io/radondb/radondb-pgbackrest:centos8-14.1-4.7.1
+    image: docker.io/zhonghl003/radondb-pgbackrest:debian-14.2-3.0.0
   pgbouncer:
-    image: docker.io/radondb/radondb-pgbouncer:centos8-14.1-4.7.1
+    image: docker.io/zhonghl003/radondb-pgbouncer:debian-14.2-3.0.0
   pgexporter:
-    image:  docker.io/radondb/radondb-postgres-exporter:centos8-v3.0.0
+    image: docker.io/zhonghl003/radondb-postgres-exporter:debian-3.0.0
 
 # singleNamespace determines how to install PGO to watch namesapces. If set to
 # false, PGO will watch for Postgres clusters in all namesapces Setting to
