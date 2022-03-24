@@ -5,11 +5,11 @@ PGO_BASEOS ?= debian
 BASE_IMAGE_OS ?= $(PGO_BASEOS)
 PGO_IMAGE_PREFIX ?= radondb
 PGO_IMAGE_TAG ?= $(PGO_BASEOS)-$(PGO_VERSION)
-PGO_VERSION ?= $(shell git describe --tags)
-PGO_PG_VERSION ?= 13
-PGO_PG_FULLVERSION ?= 13.4
+PGO_VERSION ?= 3.0.0
+PGO_PG_VERSION ?= 14
+PGO_PG_FULLVERSION ?= 14.2
 PGO_KUBE_CLIENT ?= kubectl
-PACKAGER ?= yum
+PACKAGER ?= apt
 
 RELTMPDIR=/tmp/release.$(PGO_VERSION)
 RELFILE=/tmp/postgres-operator.$(PGO_VERSION).tar.gz
