@@ -17,6 +17,7 @@ LABEL name="radondb-postgres-exporter" \
 
 RUN apt-get update ;apt-get install -y --no-install-recommends \
 	postgresql-${PGVERSION} ;\
+	ln -s /usr/lib/postgresql/${PGVERSION} /usr/pgsql-${PGVERSION} ;\
 	rm -rf /var/cache/apt/*
 
 RUN mkdir -p /opt/cpm/bin /opt/cpm/conf

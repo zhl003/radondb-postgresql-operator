@@ -17,7 +17,7 @@ source /opt/cpm/bin/common_lib.sh
 enable_debugging
 
 export PG_EXP_HOME=$(find /opt/cpm/bin/ -type d -name 'postgres_exporter*')
-export PG_DIR=$(find /usr/ -type d -name 'pgsql-*')
+export PG_DIR=$(find /usr/lib/postgresql/ -type d -name '[0-9]*')
 POSTGRES_EXPORTER_PIDFILE=/tmp/postgres_exporter.pid
 CONFIG_DIR='/opt/cpm/conf'
 QUERIES=(
