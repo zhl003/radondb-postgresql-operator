@@ -44,11 +44,17 @@ endif
 # set the proper packager, registry and base image based on the PGO_BASEOS configured
 DOCKERBASEREGISTRY=
 BASE_IMAGE_OS=
-ifeq ("$(PGO_BASEOS)", "debian")
-    BASE_IMAGE_OS=bullseye-slim
-    DFSET=debian
-    DOCKERBASEREGISTRY=debian:
-    PACKAGER=apt
+ifeq ("$(PGO_BASEOS)", "ubi8")
+    BASE_IMAGE_OS=ubi8-minimal
+    DFSET=rhel
+    DOCKERBASEREGISTRY=registry.access.redhat.com/
+    PACKAGER=microdnf
+endif
+ifeq ("$(PGO_BASEOS)", "centos8")
+    BASE_IMAGE_OS=centos8
+    DFSET=centos
+    DOCKERBASEREGISTRY=centos:
+    PACKAGER=dnf
 endif
 
 DEBUG_BUILD ?= false
@@ -135,12 +141,12 @@ build-radondb-postgres-exporter:
 
 
 #======= Image builds =======
-$(PGOROOT)/build/%/Dockerfile_:
-	$(error No Dockerfile_ found for $* naming pattern: [$@])
+$(PGOROOT)/build/%/Dockerfile:
+	$(error No Dockerfile found for $* naming pattern: [$@])
 
-%-img-build: pgo-base-$(IMGBUILDER) build-% $(PGOROOT)/build/%/Dockerfile_
+%-img-build: pgo-base-$(IMGBUILDER) build-% $(PGOROOT)/build/%/Dockerfile
 	$(IMGCMDSTEM) \
-		-f $(PGOROOT)/build/$*/Dockerfile_ \
+		-f $(PGOROOT)/build/$*/Dockerfile \
 		-t $(PGO_IMAGE_PREFIX)/$*:$(PGO_IMAGE_TAG) \
 		--build-arg BASEOS=$(PGO_BASEOS) \
 		--build-arg BASEVER=$(PGO_VERSION) \
@@ -162,9 +168,9 @@ endif
 
 pgo-base: pgo-base-$(IMGBUILDER)
 
-pgo-base-build: $(PGOROOT)/build/pgo-base/Dockerfile_ licenses
+pgo-base-build: $(PGOROOT)/build/pgo-base/Dockerfile licenses
 	$(IMGCMDSTEM) \
-		-f $(PGOROOT)/build/pgo-base/Dockerfile_ \
+		-f $(PGOROOT)/build/pgo-base/Dockerfile \
 		-t $(PGO_IMAGE_PREFIX)/pgo-base:$(PGO_IMAGE_TAG) \
 		--build-arg BASE_IMAGE_OS=$(BASE_IMAGE_OS) \
 		--build-arg BASEOS=$(PGO_BASEOS) \

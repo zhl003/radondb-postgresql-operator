@@ -1,0 +1,39 @@
+ARG BASE_IMAGE_OS
+ARG DOCKERBASEREGISTRY
+FROM ${DOCKERBASEREGISTRY}${BASE_IMAGE_OS}
+
+ARG BASEOS
+ARG PGVERSION
+ARG PG_FULL
+ARG PACKAGER
+ARG RELVER
+
+
+LABEL vendor="RadonDB" \
+	url="https://radondb.com" \
+	release="${RELVER}" \
+	postgresql.version.major="${PGVERSION}" \
+	postgresql.version="${PG_FULL}" \
+	org.opencontainers.image.vendor="RadonDB" \
+	io.openshift.tags="postgresql,postgres,sql,nosql,radondb" \
+	io.k8s.description="Trusted open source PostgreSQL-as-a-Service"
+
+ENV TZ=Asia/Shanghai
+
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh && ln -s /usr/lib/x86_64-linux-gnu /usr/lib64
+
+RUN echo deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye main contrib non-free >/etc/apt/sources.list && \
+	echo deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-updates main contrib non-free >>/etc/apt/sources.list && \
+	echo deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-backports main contrib non-free >>/etc/apt/sources.list && \
+	echo deb http://mirrors.tuna.tsinghua.edu.cn/debian-security bullseye-security main contrib non-free >>/etc/apt/sources.list && \
+	echo [ signed-by=/usr/local/share/keyrings/postgres.gpg.asc ] http://mirrors.tuna.tsinghua.edu.cn/postgresql/repos/apt/ ${BASE_IMAGE_OS}-pgdg main ${PGVERSION} >/etc/apt/sources.list.d/pgdg.list; \
+	apt-get -y update && \
+	apt-get -y install -y --no-install-recommends \
+	ca-certificates \
+	libnss-wrapper \
+	wget \
+	gettext \
+	curl ;\
+	rm -rf /var/lib/apt/lists/*; \
+	groupmod -g 999 tape 
+
