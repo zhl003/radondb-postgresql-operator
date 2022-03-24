@@ -33,6 +33,8 @@ RUN echo deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye main contrib n
 	libnss-wrapper \
 	wget \
 	gettext \
+	gnupg \
+	dirmngr \
 	curl ;\
 	groupmod -g 999 tape ;\
 	echo deb [ signed-by=/usr/local/share/keyrings/postgres.gpg.asc ] http://mirrors.tuna.tsinghua.edu.cn/postgresql/repos/apt/ bullseye-pgdg main ${PGVERSION} >/etc/apt/sources.list.d/pgdg.list; \
