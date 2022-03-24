@@ -653,7 +653,7 @@ func TestAddPGBackRestToInstancePodSpec(t *testing.T) {
 			assert.Assert(t, marshalMatches(out.Containers[2:], `
 - command:
   - pgbackrest
-  - server-start
+  - server
   livenessProbe:
     exec:
       command:
