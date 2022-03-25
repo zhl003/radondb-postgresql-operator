@@ -27,7 +27,8 @@ ADD tools/pgmonitor/postgres_exporter/common /opt/cpm/conf
 ADD tools/pgmonitor/postgres_exporter/linux /opt/cpm/conf
 ADD bin/radondb-postgres-exporter /opt/cpm/bin
 
-RUN chgrp -R 0 /opt/cpm/bin /opt/cpm/conf && \
+RUN tar -xzvf /opt/cpm/bin/postgres_exporter.tar.gz -C /opt/cpm/bin/postgres_exporter && rm -rf /opt/cpm/bin/postgres_exporter.tar.gz; \
+	chgrp -R 0 /opt/cpm/bin /opt/cpm/conf && \
 	chmod -R g=u /opt/cpm/bin/ opt/cpm/conf
 
 # postgres_exporter
