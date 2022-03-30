@@ -20,7 +20,7 @@ LABEL vendor="RadonDB" \
 
 ENV TZ=Asia/Shanghai
 
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh && ln -s /usr/lib/x86_64-linux-gnu /usr/lib64
+RUN target=$(uname -m);rm /bin/sh && ln -s /bin/bash /bin/sh && ln -s /usr/lib/${target}-linux-gnu /usr/lib64
 	
 RUN echo deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye main contrib non-free >/etc/apt/sources.list && \
 	echo deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-updates main contrib non-free >>/etc/apt/sources.list && \
