@@ -15,13 +15,13 @@
 # available as one of the "RELATED_IMAGE_POSTGRES_..." images as part of the PGO
 # installation if you want to deploy the image without setting the "postgres"
 # image variable. This defaults to the below value.
-# postgresVersion: 13
+postgresVersion: 14
 
 # postGISVersion if sets and coupled with a PostGIS enabled container, enables
 # PostGIS. This version number needs to be available as one of the
 # "RELATED_IMAGE_POSTGRES_..." images as part of the PGO installation if you
 # want to deploy the image without setting the "postgres" image variable.
-# postGISVersion: 3.1
+postGISVersion: 3.1
 
 # NOTE: pgBackRest is enabled by default. It must be set in
 # "RELATED_IMAGE_PGBACKREST" on the PGO deployment, otherwise you will need to
