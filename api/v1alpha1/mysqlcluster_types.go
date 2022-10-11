@@ -100,6 +100,12 @@ type MysqlClusterSpec struct {
 	// Containing CA (ca.crt) and server cert (tls.crt), server private key (tls.key) for SSL
 	// +optional
 	TlsSecretName string `json:"tlsSecretName,omitempty"`
+
+	// If set, the operator will create a logical repo  for the mysql cluster
+	LogicalBackups MyshBackup `json:"mysh,omitempty"`
+
+	// DataSource is the options of data migration from extenal database.
+	// DataSource *DataSource `json:"datasource,omitempty"`
 }
 
 // MysqlOpts defines the options of MySQL container.
@@ -291,6 +297,19 @@ type Persistence struct {
 // ClusterState defines cluster state.
 type ClusterState string
 
+// SyncStatus defines sync status.
+type SyncStatus string
+
+// SyncState defines sync state.
+type RepoState struct {
+	// full sync backup complete
+	LastUpdateTime metav1.Time `json:"lastUpdateTime,omitempty"`
+	// Full text reason for current status of the condition.
+	Message string `json:"message,omitempty"`
+	// Status of the condition
+	Status SyncStatus `json:"status,omitempty"`
+}
+
 const (
 	// ClusterInitState indicates whether the cluster is initializing.
 	ClusterInitState ClusterState = "Initializing"
@@ -304,6 +323,27 @@ const (
 	ClusterScaleInState ClusterState = "ScaleIn"
 	// ClusterScaleOutState indicates whether the cluster replicas is increasing.
 	ClusterScaleOutState ClusterState = "ScaleOut"
+)
+
+const (
+	// SyncDataBackupComplte indicates whether the cluster is syncing.
+	SyncDataBackupComplte SyncStatus = "SyncDataBackupComplte"
+	// SyncDataBackupFailed indicates whether the cluster is failed.
+	SyncDataBackupFailed SyncStatus = "SyncDataBackupFailed"
+	// SyncDataBackupInProgress indicates whether the cluster is in progress.
+	SyncDataBackupInProgress SyncStatus = "SyncDataBackupInProgress"
+	// SyncDataRestore indicates whether the cluster is not restore in progress.
+	SyncDataRestoreInProgress SyncStatus = "SyncDataRestoreInProgress"
+	// SyncDataRestoreComplete indicates whether the cluster is restore complete.
+	SyncDataRestoreComplete SyncStatus = "SyncDataRestoreComplete"
+	// SyncDataRestoreFailed indicates whether the cluster is restore failed.
+	SyncDataRestoreFailed SyncStatus = "SyncDataRestoreFailed"
+	// SyncDataReplicationInProgress indicates whether the cluster is replication in progress.
+	SyncDataReplicationInProgress SyncStatus = "SyncDataReplicationInProgress"
+	// SyncDataReplicationComplete indicates whether the cluster is replication complete.
+	SyncDataReplicationComplete SyncStatus = "SyncDataReplicationComplete"
+	// SyncDataReplicationFailed indicates whether the cluster is replication failed.
+	SyncDataReplicationFailed SyncStatus = "SyncDataReplicationFailed"
 )
 
 // ClusterConditionType defines type for cluster condition type.
@@ -362,6 +402,13 @@ type RaftStatus struct {
 	Nodes []string `json:"nodes,omitempty"`
 }
 
+type DataSource struct {
+	// Use mysqlshell to import data from a remote mysql server.
+	RemoteDataSource string `json:"remotedatasource,omitempty"`
+	// Use mysql replication to sync increment data from a remote mysql server.
+	MySQLIncrSync bool `json:"mysqlincrsync,omitempty"`
+}
+
 // NodeCondition defines type for representing node conditions.
 type NodeCondition struct {
 	// Type of the node condition.
@@ -409,6 +456,29 @@ type MysqlClusterStatus struct {
 	Conditions []ClusterCondition `json:"conditions,omitempty"`
 	// Nodes contains the list of the node status fulfilled.
 	Nodes []NodeStatus `json:"nodes,omitempty"`
+	// Data sync  from external mysql server status.
+	Repo *RepoStatus `json:"mysqlshrepo,omitempty"`
+}
+
+type RepoStatus struct {
+	// RepoName is the name of the repo.
+	metav1.TypeMeta `json:",inline"`
+	// RepoStatus is the status of the repo.
+	Ready bool `json:"ready"`
+	// conditions contains the list of the repo conditions fulfilled.
+	Conditions []metav1.Condition `json:"conditions,omitempty"`
+}
+
+type MyshBackup struct {
+	Enabled bool     `json:"enabled,omitempty"`
+	Image   string   `json:"image,omitempty"`
+	Jobs    int      `json:"jobs,omitempty"`
+	Volume  *RepoPVC `json:"volume,omitempty"`
+	Resources corev1.ResourceRequirements `json:"resources,omitempty"` 
+}
+
+type RepoPVC struct {
+	VolumeClaimSpec corev1.PersistentVolumeClaimSpec `json:"volumeClaimSpec"`
 }
 
 // +kubebuilder:object:root=true
